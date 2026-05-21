@@ -1,0 +1,230 @@
+{
+  "DECONNECT":"sign out",
+  "SUBTITLE": "The future of smart labeling.",
+  "LOGIN_BT": "Sign In",
+  "REGISTER_BT": "Create an account",
+  "OPTIMIZED": "Optimized for printing",
+  "EDITION": "2026 Edition",
+  "POWERED_BY": "Powered by Chrys & Steeve",
+  
+  "DASHBOARD": {
+    "ROLE": "Stock Manager",
+    "SESSION": "2026 Session",
+    "STATS": {
+      "PRODUCTS": "Products",
+      "PLAN": "Plan",
+      "PREMIUM": "Premium"
+    },
+    "INVENTORY": {
+      "TITLE": "Global Inventory",
+      "SEARCH_PLACEHOLDER": "Search for a product...",
+      "COLUMNS": {
+        "NAME": "Description",
+        "ID": "Unique ID",
+        "PRICE": "Unit Price",
+        "STATUS": "QR Status",
+        "ACTIONS": "Actions"
+      },
+      "STATUS_LABELS": {
+        "GENERATED": "Generated",
+        "PENDING": "Pending"
+      },
+      "PAGINATION": {
+        "SHOWING": "Showing {{count}} products out of {{total}}",
+        "PREVIOUS": "Previous",
+        "NEXT": "Next"
+      }
+    }
+  },
+  
+  "MENU": {
+    "USER_LEVEL": "PRO-LEVEL-2026",
+    "MAIN_TITLE": "WHAT DO YOU WANT",
+    "MAIN_TITLE_ITALIC": "TO DO?",
+    "SUBTITLE": "Choose your module to start working.",
+    "CARD_GENERATE": {
+      "TITLE": "Generate New",
+      "TITLE_LINE2": "QR Code",
+      "DESC": "Instantly create a label with name and price, optimized for high-definition printing.",
+      "ACTION": "Launch module"
+    },
+    "CARD_INVENTORY": {
+      "TITLE": "View My",
+      "TITLE_LINE2": "Inventory",
+      "DESC": "Browse your complete product list, manage prices, and find your previous QR codes.",
+      "ACTION": "Open list"
+    },
+    "FOOTER": "Intelligent Dashboard 2026"
+  },
+  "LOGIN": {
+    "TITLE": "Welcome back!",
+    "SUBTITLE": "Happy to see you again.",
+    "LABEL_IDENTITY": "Identifier",
+    "PLACEHOLDER_IDENTITY": "Email or username",
+    "LABEL_PASSWORD": "Password",
+    "FORGOT_PASSWORD": "Forgot?",
+    "PLACEHOLDER_PASSWORD": "••••••••",
+    "ERROR_NOT_FOUND": "Email or Username not found",
+    "REMEMBER_ME": "Remember me",
+    "BTN_LOGIN": "Sign In",
+    "SOCIAL_TEXT": "Or continue with",
+    "NO_ACCOUNT": "Don't have an account yet?",
+    "CREATE_ACCOUNT": "Create an account"
+  },
+  "PRINT": {
+    "HEADER_TITLE": "Print Studio",
+    "PRINTER_READY": "Printer ready",
+    "LABEL": {
+      "CERTIFICATION": "2026 Certification",
+      "DATE": "Date:",
+      "ID_PREFIX": "#ID-2026-X"
+    },
+    "CONTROLS": {
+      "TITLE": "Ready for",
+      "TITLE_ITALIC": "Labeling?",
+      "SUBTITLE": "Please check that the paper is properly aligned in your thermal printer before confirming.",
+      "FORMAT_LABEL": "Format",
+      "FORMAT_VALUE": "80x100mm (Standard)",
+      "QUALITY_LABEL": "Quality",
+      "QUALITY_VALUE": "300 DPI (HD)",
+      "BTN_PRINT": "START PRINTING",
+      "OPTIMIZED_FOR": "System optimized for Chrome & Edge 2026"
+    }
+  },
+  "GENERATOR": {
+    "TITLE": "GENERATOR",
+    "TITLE_PRO": "PRO",
+    "SUBTITLE": "Enter details to create the QR label.",
+    "LABEL_NAME": "Product Name",
+    "PLACEHOLDER_NAME": "e.g. MacBook Pro M5",
+    "LABEL_PRICE": "Price (€)",
+    "PLACEHOLDER_PRICE": "0.00",
+    "BTN_GENERATE": "GENERATE QR CODE",
+    "PREVIEW": {
+      "READY": "Ready for generation",
+      "ID_PREFIX": "ID: #SCAN-2026-X"
+    },
+    "LINK_PRINT": "to printing"
+  },
+  "REGISTER": {
+    "TITLE": "Create an account",
+    "SUBTITLE": "Join our community today",
+    "LABEL_USERNAME": "Username",
+    "PLACEHOLDER_USERNAME": "e.g. JohnDoe",
+    "LABEL_EMAIL": "Email",
+    "PLACEHOLDER_EMAIL": "john@example.com",
+    "LABEL_PASSWORD": "Password",
+    "LABEL_CHECK_PASSWORD": "Confirm password",
+    "PLACEHOLDER_PASSWORD": "••••••••",
+    "BTN_REGISTER": "Sign Up",
+    "ALREADY_REGISTERED": "Already registered?",
+    "LINK_LOGIN": "Sign In",
+    "ERRORS": {
+      "USER_SHORT": "Username is too short (min. 4 characters).",
+      "EMAIL_INVALID": "This is not a valid email.",
+      "EMAIL_EXISTS": "Email already in use.",
+      "PASS_SHORT": "Password is too short (min. 8 characters).",
+      "PASS_WEAK": "Password is not secure enough.\n( Requis: 8+ caractères, 1 Majuscule, 1 Minuscule, 1 Chiffre, 1 Spécial)",
+      "PASS_MISMATCH": "Passwords do not match.",
+      "REQUIRED": "This field is required."
+    }
+  },
+  "LOGIN_FORGOT": {
+    "LABEL_IDENTITY": "Username or Email",
+    "PLACEHOLDER_IDENTITY": "Enter your email"
+  },
+  "FORGOT_PASSWORD": {
+    "TITLE": "Forgot Password?",
+    "SUBTITLE": "Don't worry! Enter your email to reset your access.",
+    "BTN_SEND": "Reset Password",
+    "BACK_TO_LOGIN": "Back to login"
+  },
+  "RESET_PASSWORD": {
+    "TITLE": "New Password",
+    "SUBTITLE": "Choose a strong password to secure your access.",
+    "LABEL_NEW": "New password",
+    "LABEL_CONFIRM": "Confirm password",
+    "PLACEHOLDER": "••••••••",
+    "BTN_SUBMIT": "Update password"
+  },
+  "REGISTER_USER": {
+    "ERRORS": {
+      "PASS_WEAK": "Password is too weak.",
+      "PASS_MISMATCH": "Passwords do not match."
+    }},
+    
+  "VERIFICATION": {
+    "TITLE": "Verification",
+    "SUBTITLE": "We have sent a code to your email address.",
+    "ERRORS": {
+      "DIGITS_ONLY": "Digits only required"
+    },
+    "BTN_CONFIRM": "Confirm code",
+    "FOOTER_TEXT": "Didn't receive anything?",
+    "RESEND": "Resend code"
+  },
+  "TOAST": {
+    "ERROR_TITLE": "Failed!",
+    "ERROR_MSG": "An error has occurred."
+  },
+  
+  "FORGOT_PASSWORD_2": {
+    "TITLE": "Forgot Password",
+    "SUBTITLE": "Enter your email to receive a recovery code.",
+    "BTN_SEND": "Send Code",
+    "BACK_TO_LOGIN": "Back to login"
+  },
+  "LOGIN_2": {
+    "LABEL_IDENTITY": "Email Address",
+    "PLACEHOLDER_IDENTITY": "name@example.com"
+  },
+  "REGISTER_2": {
+    "ERRORS": {
+      "EMAIL_INVALID": "Invalid email format",
+      "DIGITS_ONLY": "Digits only required"
+    }
+  },
+  "VERIFICATION_2": {
+    "TITLE": "Verification",
+    "SUBTITLE": "We have sent a code to your email address.",
+    "BTN_CONFIRM": "Confirm code",
+    "FOOTER_TEXT": "Didn't receive anything?",
+    "RESEND": "Resend code"
+  },
+
+  
+  "QR_DIMENSIONS_2": {
+    "TITLE": "QR Code Dimensions",
+    "COLUMNS": "Columns",
+    "ROWS": "Rows",
+    "PAGES": "Pages"
+  },
+  "ACTIONS_2": {
+    "BACK": "back"
+  },
+  
+  "ACTIONS": {
+    "SAVE": "Save Document"
+  },
+  "PREVIEW_2": {
+    "TITLE": "Document Preview",
+    "SUBTITLE": "Real-time generation",
+    "FOOTER_INFO": "Document generated by QCode Creator • Secured"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "loading": "Loading..."
+  },
+  "modal": {
+    "delete_title": "Delete item?",
+    "delete_description": "This action cannot be undone. All associated data will be permanently deleted from our servers.",
+    "delete_button": "Yes, delete"
+  },
+  "printer": {
+    "user": "User",
+    "price": "Price",
+    "product": "Product"
+  }
+}

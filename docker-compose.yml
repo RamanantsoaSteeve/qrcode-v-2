@@ -1,0 +1,68 @@
+services:
+  # --- LE FRIGO (POSTGRESQL 16 - Plus stable et moderne) ---
+  db:
+    image: postgres:16-alpine
+    container_name: global_postgres_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: steve_db
+      POSTGRES_USER: steve_user
+      POSTGRES_PASSWORD: StevePassword123!
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U steve_user -d steve_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - dev-network
+
+  # --- LE CUISINIER (SPRING BOOT - Mis à jour en Java 21) ---
+  api:
+    image: maven:3.9-eclipse-temurin-21-alpine
+    container_name: spring_api_dev
+    working_dir: /app
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/steve_db
+      - SPRING_DATASOURCE_USERNAME=steve_user
+      - SPRING_DATASOURCE_PASSWORD=StevePassword123!
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    volumes:
+      - ./backend:/app
+      - /home/steeve/Applications/dev_cache/maven_repository:/root/.m2 # Ton cache local
+    # CORRECTION : Prêt pour le mode offline (assure-toi d'avoir enlevé mysql du pom.xml)
+    entrypoint: ["mvn", "spring-boot:run", "-o"] 
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - dev-network
+
+  # --- LE SERVEUR (ANGULAR - Mis à jour en Node 22 LTS) ---
+  web:
+    image: node:22-alpine
+    container_name: angular_web_dev
+    working_dir: /app
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./frontend:/app
+      - /home/steeve/Applications/dev_cache/npm_cache:/.npm
+    # CORRECTION : On lance directement le ng serve du projet pour éviter le plantage des arguments npm
+    entrypoint: ["sh", "-c", "./node_modules/.bin/ng serve --host 0.0.0.0"]   
+    depends_on:
+      - api
+    networks:
+      - dev-network
+
+volumes:
+  db_data:
+
+networks:
+  dev-network:
+    driver: bridge

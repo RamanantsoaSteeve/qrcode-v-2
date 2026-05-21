@@ -1,0 +1,244 @@
+{
+  "DECONNECT":"Déconnexion",
+  "SUBTITLE": "L'avenir de l'étiquetage intelligent.",
+  "LOGIN_BT": "Se connecter",
+  "REGISTER_BT": "Créer un compte",
+  "OPTIMIZED": "Optimisé pour l'impression",
+  "EDITION": "Édition 2026",
+  "POWERED_BY": "Propulsé par Chrys & Steeve",
+  
+  "DASHBOARD": {
+    "ROLE": "Gérant de Stock",
+    "SESSION": "Session 2026",
+    "STATS": {
+      "PRODUCTS": "Produits",
+      "PLAN": "Plan",
+      "PREMIUM": "Premium"
+    },
+    "INVENTORY": {
+      "TITLE": "Inventaire Global",
+      "SEARCH_PLACEHOLDER": "Rechercher un produit...",
+      "COLUMNS": {
+        "NAME": "Désignation",
+        "ID": "ID Unique",
+        "PRICE": "Prix Unitaire",
+        "STATUS": "Statut QR",
+        "ACTIONS": "Actions"
+      },
+      "STATUS_LABELS": {
+        "GENERATED": "Généré",
+        "PENDING": "En attente"
+      },
+      "PAGINATION": {
+        "SHOWING": "Affichage de {{count}} produits sur {{total}}",
+        "PREVIOUS": "Précédent",
+        "NEXT": "Suivant"
+      }
+    }
+  },
+  
+  "MENU": {
+    "USER_LEVEL": "NIVEAU-PRO-2026",
+    "MAIN_TITLE": "QUE VOULEZ-VOUS",
+    "MAIN_TITLE_ITALIC": "FAIRE ?",
+    "SUBTITLE": "Choisissez votre module pour commencer à travailler.",
+    "CARD_GENERATE": {
+      "TITLE": "Générer un Nouveau",
+      "TITLE_LINE2": "Code QR",
+      "DESC": "Créez instantanément une étiquette avec nom et prix, optimisée pour l'impression haute définition.",
+      "ACTION": "Lancer le module"
+    },
+    "CARD_INVENTORY": {
+      "TITLE": "Voir mon",
+      "TITLE_LINE2": "Inventaire",
+      "DESC": "Consultez la liste complète de vos produits, gérez vos prix et retrouvez vos anciens codes QR.",
+      "ACTION": "Ouvrir la liste"
+    },
+    "FOOTER": "Tableau de Bord Intelligent 2026"
+  },
+  "LOGIN": {
+    "TITLE": "Bon retour !",
+    "SUBTITLE": "Heureux de vous revoir parmi nous.",
+    "LABEL_IDENTITY": "Identifiant",
+    "PLACEHOLDER_IDENTITY": "Email ou pseudo",
+    "LABEL_PASSWORD": "Mot de passe",
+    "FORGOT_PASSWORD": "Oublié ?",
+    "PLACEHOLDER_PASSWORD": "••••••••",
+    "ERROR_NOT_FOUND": "Email ou Identifiant non trouvé",
+    "REMEMBER_ME": "Se souvenir de moi",
+    "BTN_LOGIN": "Se connecter",
+    "SOCIAL_TEXT": "Ou continuer avec",
+    "NO_ACCOUNT": "Pas encore de compte ?",
+    "CREATE_ACCOUNT": "Créer un compte"
+  },
+  "PRINT": {
+    "HEADER_TITLE": "Studio d'impression",
+    "PRINTER_READY": "Imprimante prête",
+    "LABEL": {
+      "CERTIFICATION": "Certification 2026",
+      "DATE": "Date :",
+      "ID_PREFIX": "#ID-2026-X"
+    },
+    "CONTROLS": {
+      "TITLE": "Prêt pour",
+      "TITLE_ITALIC": "l'étiquetage ?",
+      "SUBTITLE": "Veuillez vérifier que le papier est bien aligné dans votre imprimante thermique avant de confirmer.",
+      "FORMAT_LABEL": "Format",
+      "FORMAT_VALUE": "80x100mm (Standard)",
+      "QUALITY_LABEL": "Qualité",
+      "QUALITY_VALUE": "300 DPI (HD)",
+      "BTN_PRINT": "LANCER L'IMPRESSION",
+      "OPTIMIZED_FOR": "Système optimisé pour Chrome & Edge 2026"
+    }
+  },
+  "GENERATOR": {
+    "TITLE": "GÉNÉRATEUR",
+    "TITLE_PRO": "PRO",
+    "SUBTITLE": "Entrez les détails pour créer l'étiquette QR.",
+    "LABEL_NAME": "Nom du Produit",
+    "PLACEHOLDER_NAME": "Ex : MacBook Pro M5",
+    "LABEL_PRICE": "Prix (€)",
+    "PLACEHOLDER_PRICE": "0.00",
+    "BTN_GENERATE": "GÉNÉRER LE CODE QR",
+    "PREVIEW": {
+      "READY": "Prêt pour génération",
+      "ID_PREFIX": "ID : #SCAN-2026-X"
+    },
+    "LINK_PRINT": "vers l'impression"
+  },
+  "REGISTER": {
+    "TITLE": "Créer un compte",
+    "SUBTITLE": "Rejoignez notre communauté dès aujourd'hui",
+    "LABEL_USERNAME": "Nom d'utilisateur",
+    "PLACEHOLDER_USERNAME": "Ex : JeanDupont",
+    "LABEL_EMAIL": "Email",
+    "PLACEHOLDER_EMAIL": "jean@exemple.com",
+    "LABEL_PASSWORD": "Mot de passe",
+    "LABEL_CHECK_PASSWORD": "Confirmez le mot de passe",
+    "PLACEHOLDER_PASSWORD": "••••••••",
+    "BTN_REGISTER": "S'inscrire",
+    "ALREADY_REGISTERED": "Déjà inscrit ?",
+    "LINK_LOGIN": "Se connecter",
+    "ERRORS": {
+      "USER_SHORT": "Le nom d'utilisateur est trop court (min. 4 caractères).",
+      "EMAIL_INVALID": "Ce n'est pas un email valide.",
+      "EMAIL_EXISTS": "Email déjà utilisé.",
+      "PASS_SHORT": "Le mot de passe est trop court (min. 8 caractères).",
+      "PASS_WEAK": "Le mot de passe n'est pas assez sécurisé.\n(Exigences : minimum 8 caractères, 1 Majuscule, 1 Minuscule, 1 Chiffre, 1 Caractère Spécial)",
+      "PASS_MISMATCH": "Les mots de passe ne correspondent pas.",
+      "REQUIRED": "Ce champ est obligatoire."
+    }
+  },
+  
+  "LOGIN_FORGOT": {
+    "LABEL_IDENTITY": "Identifiant ou Email",
+    "PLACEHOLDER_IDENTITY": "Entrez votre email"
+  },
+  "FORGOT_PASSWORD": {
+    "TITLE": "Mot de passe oublié ?",
+    "SUBTITLE": "Pas de panique ! Entrez votre email pour réinitialiser votre accès.",
+    "BTN_SEND": "Réinitialiser le mot de passe",
+    "BACK_TO_LOGIN": "Retour à la connexion"
+  },
+  
+  "RESET_PASSWORD": {
+    "TITLE": "Nouveau mot de passe",
+    "SUBTITLE": "Choisissez un mot de passe fort pour sécuriser votre accès.",
+    "LABEL_NEW": "Nouveau mot de passe",
+    "LABEL_CONFIRM": "Confirmer le mot de passe",
+    "PLACEHOLDER": "••••••••",
+    "BTN_SUBMIT": "Mettre à jour le mot de passe"
+  },
+  "REGISTER_USER": {
+    "ERRORS": {
+      "PASS_WEAK": "Le mot de passe doit être plus complexe.",
+      "PASS_MISMATCH": "Les mots de passe ne correspondent pas."
+  }},
+  
+  "VERIFICATION": {
+    "TITLE": "Vérification",
+    "SUBTITLE": "Nous avons envoyé un code à votre adresse mail.",
+    "ERRORS": {
+      "DIGITS_ONLY": "Chiffres uniquement requis"
+    },
+    "BTN_CONFIRM": "Confirmer le code",
+    "FOOTER_TEXT": "Vous n'avez rien reçu ?",
+    "RESEND": "Renvoyer le code"
+  },
+  "TOAST": {
+    "ERROR_TITLE": "Échec !",
+    "ERROR_MSG": "Une erreur est survenue."
+  },
+  
+  "FORGOT_PASSWORD": {
+    "TITLE": "Mot de passe oublié",
+    "SUBTITLE": "Entrez votre email pour recevoir un code de récupération.",
+    "BTN_SEND": "Envoyer le code",
+    "BACK_TO_LOGIN": "Retour à la connexion"
+  },
+  "FORGOT_PASSWORD_2": {
+    "TITLE": "Mot de passe oublié",
+    "SUBTITLE": "Entrez votre email pour recevoir un code de récupération.",
+    "BTN_SEND": "Envoyer le code",
+    "BACK_TO_LOGIN": "Retour à la connexion"
+  },
+  "LOGIN_2": {
+    "LABEL_IDENTITY": "Adresse Email",
+    "PLACEHOLDER_IDENTITY": "nom@exemple.com"
+  },
+  "REGISTER_2": {
+    "ERRORS": {
+      "EMAIL_INVALID": "Format d'email invalide",
+      "DIGITS_ONLY": "Chiffres uniquement requis"
+    }
+  },
+  "VERIFICATION_2": {
+    "TITLE": "Vérification",
+    "SUBTITLE": "Nous avons envoyé un code à votre adresse mail.",
+    "BTN_CONFIRM": "Confirmer le code",
+    "FOOTER_TEXT": "Vous n'avez rien reçu ?",
+    "RESEND": "Renvoyer le code"
+  },
+  
+  "QR_DIMENSIONS_2": {
+    "TITLE": "Dimensions du QR Code",
+    "COLUMNS": "Colonnes",
+    "ROWS": "Lignes",
+    "PAGES": "Pages"
+  },
+  "ACTIONS_2": {
+    "BACK": "retour"
+  },
+  
+  "ACTIONS": {
+    "SAVE": "Enregistrer le document"
+  },
+  "PREVIEW_2": {
+    "TITLE": "Aperçu du Document",
+    "SUBTITLE": "Génération en temps réel",
+    "FOOTER_INFO": "Document généré par QCode Creator • Sécurisé"
+  },
+  "common": {
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "confirm": "Confirmer",
+    "loading": "Chargement..."
+  },
+  "modal": {
+    "delete_title": "Supprimer l'élément ?",
+    "delete_description": "Cette action est irréversible. Toutes les données associées seront définitivement effacées de nos serveurs.",
+    "delete_button": "Oui, supprimer"
+  },
+  "printer": {
+    "user": "Utilisateur",
+    "price": "Prix",
+    "product": "Produit"
+  }
+}
+
+
+
+
+
+
+

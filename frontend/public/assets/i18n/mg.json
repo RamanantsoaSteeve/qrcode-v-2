@@ -1,0 +1,231 @@
+{
+  "DECONNECT": "Hivoaka",
+  "SUBTITLE": "Ny hoavin'ny fametahana marika maranitra.",
+  "LOGIN_BT": "Hiditra",
+  "REGISTER_BT": "Hamorona kaonty",
+  "OPTIMIZED": "Natao hifanaraka amin'ny fanontana",
+  "EDITION": "Andiany 2026",
+  "POWERED_BY": "Nolavoin'i Chrys & Steeve",
+  
+  "DASHBOARD": {
+    "ROLE": "Mpitantana Tahiry",
+    "SESSION": "Vanim-potoana 2026",
+    "STATS": {
+      "PRODUCTS": "Entana",
+      "PLAN": "Tolotra",
+      "PREMIUM": "Premium"
+    },
+    "INVENTORY": {
+      "TITLE": "Tahiry Ankapobeny",
+      "SEARCH_PLACEHOLDER": "Hitady entana...",
+      "COLUMNS": {
+        "NAME": "Anarany",
+        "ID": "ID Miavaka",
+        "PRICE": "Vidin'ny singa",
+        "STATUS": "Sata QR",
+        "ACTIONS": "Hetsika"
+      },
+      "STATUS_LABELS": {
+        "GENERATED": "Efa vita",
+        "PENDING": "Andrasana"
+      },
+      "PAGINATION": {
+        "SHOWING": "Mampiseho entana {{count}} amin'ny {{total}}",
+        "PREVIOUS": "Taloha",
+        "NEXT": "Manaraka"
+      }
+    }
+  },
+  
+  "MENU": {
+    "USER_LEVEL": "LEVIEL-PRO-2026",
+    "MAIN_TITLE": "INONA NO TIANAO",
+    "MAIN_TITLE_ITALIC": "ATAO ?",
+    "SUBTITLE": "Safidio ny sampana hanombohana ny asa.",
+    "CARD_GENERATE": {
+      "TITLE": "Hanao",
+      "TITLE_LINE2": "Kaody QR vaovao",
+      "DESC": "Manamboara marika misy anarana sy vidiny eo noho eo, natao hivoaka mazava tsara rehefa atonta.",
+      "ACTION": "Handefa ny sampana"
+    },
+    "CARD_INVENTORY": {
+      "TITLE": "Hijery ny",
+      "TITLE_LINE2": "Tahiry",
+      "DESC": "Jereo ny lisitry ny entanao rehetra, tantano ny vidiny ary tadiavo ireo kaody QR taloha.",
+      "ACTION": "Hanokatra ny lisitra"
+    },
+    "FOOTER": "Tabilao Fanaraha-maso Maranitra 2026"
+  },
+  "LOGIN": {
+    "TITLE": "Tonga soa indray !",
+    "SUBTITLE": "Faly mahita anao indray izahay.",
+    "LABEL_IDENTITY": "Mpampiasa",
+    "PLACEHOLDER_IDENTITY": "Email na anarana",
+    "LABEL_PASSWORD": "Teny miafina",
+    "FORGOT_PASSWORD": "Hadino ?",
+    "PLACEHOLDER_PASSWORD": "••••••••",
+    "ERROR_NOT_FOUND": "Tsy hita io Email na Anarana io",
+    "REMEMBER_ME": "Tsarovy aho",
+    "BTN_LOGIN": "Hiditra",
+    "SOCIAL_TEXT": "Na tohizana amin'ny",
+    "NO_ACCOUNT": "Tsy mbola manana kaonty ?",
+    "CREATE_ACCOUNT": "Hamorona kaonty"
+  },
+  "PRINT": {
+    "HEADER_TITLE": "Toerana fanontana",
+    "PRINTER_READY": "Vonona ny milina fanontana",
+    "LABEL": {
+      "CERTIFICATION": "Fanamarinana 2026",
+      "DATE": "Daty :",
+      "ID_PREFIX": "#ID-2026-X"
+    },
+    "CONTROLS": {
+      "TITLE": "Vonona",
+      "TITLE_ITALIC": "hametaka marika ?",
+      "SUBTITLE": "Jereo tsara raha milamina tsara ny taratasy ao amin'ny milina (imprimante thermique) alohan'ny hanamafisana.",
+      "FORMAT_LABEL": "Halehibeny",
+      "FORMAT_VALUE": "80x100mm (Standard)",
+      "QUALITY_LABEL": "Kalitao",
+      "QUALITY_VALUE": "300 DPI (HD)",
+      "BTN_PRINT": "HANDREHITRA NY FANONTANA",
+      "OPTIMIZED_FOR": "Rafitra namboarina ho an'ny Chrome & Edge 2026"
+    }
+  },
+  "GENERATOR": {
+    "TITLE": "MPANAO",
+    "TITLE_PRO": "PRO",
+    "SUBTITLE": "Ampidiro ny tsipiriany hamoronana ny marika QR.",
+    "LABEL_NAME": "Anaran'ny Entana",
+    "PLACEHOLDER_NAME": "Ohatra: MacBook Pro M5",
+    "LABEL_PRICE": "Vidiny (Ar)",
+    "PLACEHOLDER_PRICE": "0.00",
+    "BTN_GENERATE": "HAMORONA KAODY QR",
+    "PREVIEW": {
+      "READY": "Vonona hamboarina",
+      "ID_PREFIX": "ID : #SCAN-2026-X"
+    },
+    "LINK_PRINT": "mankany amin'ny fanontana"
+  },
+  "REGISTER": {
+    "TITLE": "Hamorona kaonty",
+    "SUBTITLE": "Midira ao amin'ny fikambananay anio",
+    "LABEL_USERNAME": "Anarana mpampiasa",
+    "PLACEHOLDER_USERNAME": "Ohatra: JeanDupont",
+    "LABEL_EMAIL": "Email",
+    "PLACEHOLDER_EMAIL": "jean@ohatra.com",
+    "LABEL_PASSWORD": "Teny miafina",
+    "LABEL_CHECK_PASSWORD": "Hamafiso ny teny miafina",
+    "PLACEHOLDER_PASSWORD": "••••••••",
+    "BTN_REGISTER": "Hisoratra anarana",
+    "ALREADY_REGISTERED": "Efa manana kaonty ?",
+    "LINK_LOGIN": "Hiditra",
+    "ERRORS": {
+      "USER_SHORT": "Fohy loatra ny anarana (farafahakeliny tarehin-tsoratra 4).",
+      "EMAIL_INVALID": "Tsy email manankery io.",
+      "EMAIL_EXISTS": "Efa nampiasaina io email io.",
+      "PASS_SHORT": "Fohy loatra ny teny miafina (farafahakeliny tarehin-tsoratra 8).",
+      "PASS_WEAK": "Tsy ampy fiarovana ny teny miafina.\n(Fepetra: farafahakeliny 8, misy Renisoratra, Kisarisary, Isa, ary Marika manokana)",
+      "PASS_MISMATCH": "Tsy mitovy ny teny miafina roa ampidirinao.",
+      "REQUIRED": "Tsy maintsy fenoina ity faritra ity."
+    }
+  },
+  
+  "LOGIN_FORGOT": {
+    "LABEL_IDENTITY": "Anarana na Email",
+    "PLACEHOLDER_IDENTITY": "Ampidiro ny email-nao"
+  },
+  "FORGOT_PASSWORD": {
+    "TITLE": "Hadino ny teny miafina ?",
+    "SUBTITLE": "Aza taitra ! Ampidiro ny email-nao hamerenana ny fidirana.",
+    "BTN_SEND": "Hamerina ny teny miafina",
+    "BACK_TO_LOGIN": "Hiverina hiditra"
+  },
+  
+  "RESET_PASSWORD": {
+    "TITLE": "Teny miafina vaovao",
+    "SUBTITLE": "Mifidiana teny miafina mafy mba hiarovana ny fidiranao.",
+    "LABEL_NEW": "Teny miafina vaovao",
+    "LABEL_CONFIRM": "Hamafiso ny teny miafina",
+    "PLACEHOLDER": "••••••••",
+    "BTN_SUBMIT": "Havaozina ny teny miafina"
+  },
+  "REGISTER_USER": {
+    "ERRORS": {
+      "PASS_WEAK": "Tsy maintsy sarotra kokoa ny teny miafina.",
+      "PASS_MISMATCH": "Tsy mitovy ny teny miafina."
+  }},
+  
+  "VERIFICATION": {
+    "TITLE": "Fanamarinana",
+    "SUBTITLE": "Nandefa kaody tany amin'ny email-nao izahay.",
+    "ERRORS": {
+      "DIGITS_ONLY": "Isa ihany no azo ampidirina"
+    },
+    "BTN_CONFIRM": "Hamafiso ny kaody",
+    "FOOTER_TEXT": "Tsy nahazo na inona na inona ?",
+    "RESEND": "Avereno alefa ny kaody"
+  },
+  "TOAST": {
+    "ERROR_TITLE": "Tsy tanteraka !",
+    "ERROR_MSG": "Nisy hadisoana nitranga."
+  },
+  
+  "FORGOT_PASSWORD_2": {
+    "TITLE": "Hadino ny teny miafina",
+    "SUBTITLE": "Ampidiro ny email hahazoana kaody fanarenana.",
+    "BTN_SEND": "Alefa ny kaody",
+    "BACK_TO_LOGIN": "Hiverina hiditra"
+  },
+  "LOGIN_2": {
+    "LABEL_IDENTITY": "Adiresy Email",
+    "PLACEHOLDER_IDENTITY": "anarana@ohatra.com"
+  },
+  "REGISTER_2": {
+    "ERRORS": {
+      "EMAIL_INVALID": "Tsy mety ny endriky ny email",
+      "DIGITS_ONLY": "Isa ihany no ilaina"
+    }
+  },
+  "VERIFICATION_2": {
+    "TITLE": "Fanamarinana",
+    "SUBTITLE": "Nandefa kaody tany amin'ny mailakao izahay.",
+    "BTN_CONFIRM": "Hamafiso ny kaody",
+    "FOOTER_TEXT": "Tsy nahazo na inona na inona ?",
+    "RESEND": "Avereno alefa ny kaody"
+  },
+  
+  "QR_DIMENSIONS_2": {
+    "TITLE": "Haben'ny Kaody QR",
+    "COLUMNS": "Andalana mitsangana",
+    "ROWS": "Andalana mitsivalana",
+    "PAGES": "Pejy"
+  },
+  "ACTIONS_2": {
+    "BACK": "hiverina"
+  },
+  
+  "ACTIONS": {
+    "SAVE": "Tahirina ny tahirin-kevitra"
+  },
+  "PREVIEW_2": {
+    "TITLE": "Topi-maso ny Tahirin-kevitra",
+    "SUBTITLE": "Famoronana mivantana",
+    "FOOTER_INFO": "Tahirin-kevitra namboarin'i QCode Creator • Voaaro"
+  },
+  "common": {
+    "cancel": "Hanafoana",
+    "delete": "Fafana",
+    "confirm": "Hamafisina",
+    "loading": "Eo am-pikirakirana..."
+  },
+  "modal": {
+    "delete_title": "Hofafana ve ity zavatra ity?",
+    "delete_description": "Tsy azo averina intsony ity hetsika ity. Ho voafafa tanteraka ao amin'ny server ny angon-drakitra rehetra mikasika izany.",
+    "delete_button": "Eny, fafana"
+  },
+  "printer": {
+    "user": "Mpampiasa",
+    "price": "Vidiny",
+    "product": "Entana"
+  }
+}
