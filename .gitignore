@@ -1,0 +1,9 @@
+# Bloquer le fichier de configuration des secrets (CRUCIAL)
+.env
+
+# Bloquer le dossier de configuration locale de VS Code
+.vscode/
+
+# Bloquer les fichiers systèmes et logs
+.DS_Store
+*.log
