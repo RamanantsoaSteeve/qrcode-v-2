@@ -11,5 +11,7 @@ import com.example.demo.model.AuthModel;
 public interface AuthRepository extends JpaRepository<AuthModel, Long> {
     boolean existsByEmail(String email);
 
+    Optional<Long> getLongByEmail(String email);
+
     Optional<AuthModel> findByEmail(String email);
 }
