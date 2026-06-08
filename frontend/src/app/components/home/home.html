@@ -1,0 +1,90 @@
+<div *transloco="let t"
+  class="relative min-h-screen bg-white text-zinc-900 font-sans flex flex-col items-center justify-center px-6 overflow-hidden">
+  <!-- DÉCOR DE FOND : GRILLE MINIMALISTE -->
+  <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="
+      background-image:
+        linear-gradient(#000 1px, transparent 1px),
+        linear-gradient(90deg, #000 1px, transparent 1px);
+      background-size: 50px 50px;
+    "></div>
+  <div
+    class="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-zinc-100 rounded-full blur-[120px] pointer-events-none">
+  </div>
+
+  <!-- CONTENEUR PRINCIPAL : ARCHITECTURE ASYMÉTRIQUE -->
+  <div
+    class="relative max-w-4xl w-full flex flex-col md:flex-row bg-white border border-zinc-200 rounded-[3rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.05)] overflow-hidden">
+    <!-- SECTION GAUCHE : VISUEL & TITRE -->
+    <div class="w-full md:w-5/12 bg-zinc-950 p-12 flex flex-col justify-between text-white relative">
+      <!-- Motif géométrique discret -->
+      <div
+        class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none flex items-center justify-center overflow-hidden">
+        <span class="text-[20rem] font-black leading-none select-none tracking-tighter italic">QR</span>
+      </div>
+
+      <div class="relative z-10">
+        <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-10 shadow-xl shadow-white/5">
+          <svg xmlns="http://www.w3.org" class="h-7 w-7 text-zinc-950" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+          </svg>
+        </div>
+        <h1 class="text-4xl font-black tracking-tighter uppercase leading-none">
+          QR<span class="text-zinc-500">Gen</span><br />Pro
+        </h1>
+      </div>
+
+      <div class="relative z-10">
+        <div class="h-1 w-12 bg-zinc-700 mb-4"></div>
+        <p class="text-zinc-400 text-xs font-bold uppercase tracking-widest leading-relaxed">
+          {{ t('SUBTITLE') }}
+        </p>
+      </div>
+    </div>
+
+    <!-- SECTION DROITE : ACTIONS -->
+    <div class="w-full md:w-7/12 p-10 md:p-16 flex flex-col justify-center bg-white">
+      <div class="space-y-6">
+        <!-- BOUTON LOGIN (Style Brutalist Minimal) -->
+        <button [routerLink]="['/login']"
+          class="group relative w-full py-5 px-8 bg-zinc-900 text-white rounded-2xl font-black text-sm uppercase tracking-widest overflow-hidden transition-all hover:bg-zinc-800 hover:scale-[1.02] active:scale-95 shadow-xl shadow-zinc-200">
+          <span class="relative z-10 flex items-center justify-center gap-3">
+            {{ t('LOGIN_BT') }}
+            <svg xmlns="http://www.w3.org" class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </span>
+        </button>
+
+        <!-- BOUTON REGISTER (Style Outline Minimal) -->
+        <button [routerLink]="['/register']"
+          class="w-full py-5 px-8 border-2 border-zinc-100 bg-zinc-50/50 text-zinc-900 rounded-2xl font-black text-sm uppercase tracking-widest transition-all hover:bg-white hover:border-zinc-900 active:scale-95">
+          {{ t('REGISTER_BT') }}
+        </button>
+      </div>
+
+      <!-- FOOTER INFO -->
+      <div class="mt-12 pt-8 border-t border-zinc-100 flex items-center justify-between">
+        <div class="flex flex-col">
+          <span class="text-[10px] font-black text-zinc-300 uppercase tracking-widest mb-1">{{
+            t('OPTIMIZED')
+            }}</span>
+          <span class="text-[11px] font-bold text-zinc-900 italic">{{ t('EDITION') }}</span>
+        </div>
+        <div
+          class="w-8 h-8 rounded-full border border-zinc-100 flex items-center justify-center text-[10px] font-black italic">
+          v2
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COPYRIGHT EXTERNE -->
+  <div class="mt-12 flex flex-col items-center">
+    <p class="text-zinc-300 text-[9px] font-black uppercase tracking-[0.6em] pl-[0.6em]">
+      {{ t('POWERED_BY') }}
+    </p>
+  </div>
+</div>

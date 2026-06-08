@@ -13,7 +13,6 @@ import com.example.demo.dto.AuthDto.UserLogin;
 import com.example.demo.service.AuthService;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -48,7 +47,7 @@ public class AuthController {
     public ResponseEntity<ResponseIdRegister> postMethodName(@RequestBody String email) {
         return ResponseEntity.ok(AuthDto.ResponseIdRegister.builder()
                 .success(true)
-                .id(authService.getIdLong(email))
+                .id(authService.getIdByEmail(email))
                 .build());
     }
 

@@ -68,7 +68,7 @@ public class AuthService {
         return authMapper.toDto(authModel);
     }
 
-    public Long getIdLong(String email) {
+    public Long getIdByEmail(String email) {
         return authRepository.getLongByEmail(email)
                 .orElseThrow(() -> new LocalExceptionHandler("email invalid"));
     }
