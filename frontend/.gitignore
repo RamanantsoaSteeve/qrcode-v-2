@@ -1,35 +1,38 @@
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
-# Compiled output
+# =========================================================================
+# Production & Build (Code compilé)
+# =========================================================================
 /dist
 /tmp
 /out-tsc
 /bazel-out
 
-# Node
+# =========================================================================
+# SÉCURITÉ : Fichiers d'environnement et Secrets (À AJOUTER ABSOLUMENT)
+# =========================================================================
+# Si tu utilises des fichiers .env côté front
+.env
+.env.local
+.env.*
+
+# Si tu utilises le système d'environnement classique d'Angular :
+# On garde 'environment.ts' (la structure de dev) mais on IGNORE les fichiers de prod ou locaux avec les vrais secrets.
+**/src/environments/environment.prod.ts
+**/src/environments/environment.local.ts
+**/src/environments/environment.development.ts
+
+# =========================================================================
+# Dépendances Node
+# =========================================================================
 /node_modules
 npm-debug.log
 yarn-error.log
+.pnpm-debug.log
 
-# IDEs and editors
-.idea/
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-
-# Visual Studio Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/mcp.json
-.history/*
-
-# Miscellaneous
+# =========================================================================
+# Cache et Outils Angular
+# =========================================================================
 /.angular/cache
 .sass-cache/
 /connect.lock
@@ -39,6 +42,28 @@ testem.log
 /typings
 __screenshots__/
 
-# System files
+# =========================================================================
+# IDEs, Éditeurs et Système
+# =========================================================================
+# IntelliJ / WebStorm
+.idea/
+
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Eclipse / Autres
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# OS
 .DS_Store
 Thumbs.db
