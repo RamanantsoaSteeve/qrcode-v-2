@@ -52,7 +52,7 @@ public class SecurityConfig {
             return User.builder()
                     .username(user.getEmail())
                     .password(user.getPassword())
-                    .authorities("USER") // Gère tes rôles ici si nécessaire
+                    .authorities("USER")
                     .build();
         };
     }
@@ -87,7 +87,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll() // Endpoints publics (register / login)
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/product/**").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
 

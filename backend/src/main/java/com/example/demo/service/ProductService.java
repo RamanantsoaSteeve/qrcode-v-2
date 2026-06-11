@@ -50,7 +50,6 @@ public class ProductService {
                 " | Prix: " + request.price() + " " + request.currencySymbol();
 
         return contentQrCode;
-
     }
 
     /**
@@ -75,51 +74,47 @@ public class ProductService {
         PdfWriter.getInstance(document, pdfOutputStream);
         document.open();
 
+        // DECODEZ UNE SEULE FOIS ICI
+        byte[] imageBytes = Base64.getDecoder().decode(generateQrCodeBlob);
+        Image imgQr = Image.getInstance(imageBytes);
+        imgQr.setAlignment(Element.ALIGN_CENTER);
+
         int maxPages = request.pages();
         int nbLignes = request.rows();
         int nbColonnes = request.column();
 
         for (int p = 0; p < maxPages; p++) {
-
             PdfPTable table = new PdfPTable(nbColonnes);
             table.setWidthPercentage(100);
 
             for (int l = 0; l < nbLignes; l++) {
                 for (int c = 0; c < nbColonnes; c++) {
-
                     PdfPCell cellule = new PdfPCell();
                     cellule.setHorizontalAlignment(Element.ALIGN_CENTER);
                     cellule.setVerticalAlignment(Element.ALIGN_MIDDLE);
                     cellule.setPadding(5);
 
-                    // Reconversion of String Base64 in image for OpenPDF
-                    byte[] imageBytes = Base64.getDecoder().decode(generateQrCodeBlob);
-                    Image imgQr = Image.getInstance(imageBytes);
-                    imgQr.setAlignment(Element.ALIGN_CENTER);
+                    // Réutilisation directe de l'objet imgQr partagé
                     cellule.addElement(imgQr);
+
                     Paragraph legende = new Paragraph(
                             request.contentQrCodeDto().name() + " (" + request.contentQrCodeDto().price() + " "
                                     + request.contentQrCodeDto().currencySymbol() + ")");
-
                     legende.setAlignment(Element.ALIGN_CENTER);
                     cellule.addElement(legende);
                     table.addCell(cellule);
                 }
             }
-
             document.add(table);
             if (p < maxPages - 1) {
                 document.newPage();
             }
         }
-
         document.close();
-
-        // return table d'octets (BLOB)
         return pdfOutputStream.toByteArray();
     }
 
-    public List<ProductDto.ProductResponse.ProductResponseBuilder> getProductModels(Long id) {
+    public List<ProductDto.ProductResponse> getProductModels(Long id) {
         AuthModel authModel = authRepository.findById(id).orElseThrow(
                 () -> new LocalExceptionHandler("Invalid id"));
 
@@ -131,7 +126,7 @@ public class ProductService {
                                 .price(product.getPrice())
                                 .user_id(id)
                                 .createdat(product.getCreatedAt())
-                                .currency(product.getCurrency()))
+                                .currency(product.getCurrency()).build())
                 .toList();
     }
 

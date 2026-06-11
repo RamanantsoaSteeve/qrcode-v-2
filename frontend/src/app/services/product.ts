@@ -3,7 +3,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProductResponse, ProductState, qrcodeResponse } from '../models/product';
 import { config } from '../../environments/environment';
-import { AuthResponsePassword, AuthResponseToken } from '../models/response';
+import { AuthResponsePassword } from '../models/response';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {

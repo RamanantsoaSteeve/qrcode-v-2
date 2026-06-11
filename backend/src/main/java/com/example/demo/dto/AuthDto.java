@@ -16,6 +16,9 @@ public class AuthDto {
         public record ResponseRequestRegister(Long id, Boolean success) {
         }
 
+        public record RequestEmail(String email) {
+        }
+
         public record LoginRequest(
                         @Email(message = "Invalid email") @NotBlank(message = "champ is empty") String email,
                         @NotBlank(message = "Password is Blank") @Size(min = 6, message = "Password is too short") String password) {

@@ -15,11 +15,11 @@ public interface AuthMapper {
     @Mapping(source = "password", target = "password")
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "productModels", ignore = true)
     AuthModel toEntity(AuthDto.RegisterRequest authDto);
 
     @Mapping(source = "name", target = "username")
     @Mapping(source = "email", target = "email")
     @Mapping(source = "id", target = "id")
     UserLogin toDto(AuthModel authModel);
-
 }

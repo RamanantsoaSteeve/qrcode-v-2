@@ -42,7 +42,7 @@ services:
         condition: service_healthy
     networks:
       - dev-network
-
+      
   # --- LE SERVEUR (ANGULAR - Mis à jour en Node 22 LTS) ---
   web:
     image: node:22-alpine

@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -29,7 +30,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional
 public class AuthService {
-    HashMap<String, String> codes = new HashMap<>();
+    HashMap<String, Number> codes = new HashMap<>();
 
     private final AuthRepository authRepository;
     private final AuthMapper authMapper;
@@ -68,9 +69,10 @@ public class AuthService {
         return authMapper.toDto(authModel);
     }
 
-    public Long getIdByEmail(String email) {
-        return authRepository.getLongByEmail(email)
-                .orElseThrow(() -> new LocalExceptionHandler("email invalid"));
+    public Long getIdByEmail(AuthDto.RequestEmail dto) {
+        AuthModel authModel = authRepository.findByEmail(dto.email())
+                .orElseThrow(() -> new LocalExceptionHandler("email introuvable"));
+        return authModel.getId();
     }
 
     @Async
@@ -92,8 +94,11 @@ public class AuthService {
         }
     }
 
-    public String generatHtml(String code, String username, String to) {
-        codes.remove(to);
+    public String generatHtml(Number code, String username, String to) {
+        if (codes.containsKey(to)) {
+            codes.remove(to);
+        }
+
         codes.put(to, code);
         String htmlContent = """
                 <!DOCTYPE html>
@@ -123,8 +128,13 @@ public class AuthService {
     }
 
     public void checkCode(Number code, String email) {
-        if (!(code == Integer.valueOf(codes.get(email)))) {
-            throw new LocalExceptionHandler("email invalid");
+        if (!code.equals(codes.get(email))) {
+            throw new LocalExceptionHandler("code invalid");
+
         }
+    }
+
+    public Number generateCode() {
+        return Integer.valueOf(String.format("%04d", ThreadLocalRandom.current().nextInt(10000)));
     }
 }

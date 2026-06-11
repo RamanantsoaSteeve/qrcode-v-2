@@ -4,11 +4,12 @@ import java.time.LocalDateTime;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Builder;
 
 public class ProductDto {
         public record ProductInfoDto(
-                        @NotBlank(message = "price empty") @NotNull(message = "price null") Number price,
+                        @NotNull(message = "price null") @PositiveOrZero(message = "must great than 0") Number price,
                         @NotBlank(message = "name empty") @NotNull(message = "name not null") String name,
                         @NotBlank(message = "currencySymbol empty") @NotNull(message = "currencySymbol not null") String currencySymbol,
                         @NotBlank(message = "userId empty") @NotNull(message = "userId not null") String userId) {

@@ -27,7 +27,7 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/get-product")
-    public ResponseEntity<List<ProductDto.ProductResponse.ProductResponseBuilder>> getProduct(@RequestBody Long id) {
+    public ResponseEntity<List<ProductDto.ProductResponse>> getProduct(@RequestBody Long id) {
         return ResponseEntity.ok(productService.getProductModels(id));
     }
 
@@ -49,10 +49,9 @@ public class ProductController {
     @PostMapping("/print")
     public ResponseEntity<byte[]> printProduct(@RequestBody @Valid ProductDto.PrintProductDto dto) {
         try {
-            byte[] pdfBlob = productService.generatePdfStrict(dto,
-                    productService.createContentQrcode(dto.contentQrCodeDto()));
-
-            // Configuration of header for a navigator
+            String qrCodeText = productService.createContentQrcode(dto.contentQrCodeDto());
+            String qrCodeBase64 = productService.generateQrCodeBlob(qrCodeText);
+            byte[] pdfBlob = productService.generatePdfStrict(dto, qrCodeBase64);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);
             headers.setContentDispositionFormData("inline", "produit_qrcode.pdf");
@@ -61,6 +60,8 @@ public class ProductController {
                     .headers(headers)
                     .body(pdfBlob);
         } catch (Exception e) {
+            e.printStackTrace();
+
             return ResponseEntity.internalServerError().build();
         }
     }

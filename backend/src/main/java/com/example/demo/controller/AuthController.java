@@ -35,7 +35,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseRequestLogin> postMethodName(@RequestBody @Valid AuthDto.LoginRequest dto) {
+    public ResponseEntity<ResponseRequestLogin> Login(@RequestBody @Valid AuthDto.LoginRequest dto) {
         return ResponseEntity.ok(AuthDto.ResponseRequestLogin.builder()
                 .success(true)
                 .token(authService.getToken(dto))
@@ -44,7 +44,7 @@ public class AuthController {
     }
 
     @PostMapping("/check-user")
-    public ResponseEntity<ResponseIdRegister> postMethodName(@RequestBody String email) {
+    public ResponseEntity<ResponseIdRegister> CheckUser(@RequestBody @Valid AuthDto.RequestEmail email) {
         return ResponseEntity.ok(AuthDto.ResponseIdRegister.builder()
                 .success(true)
                 .id(authService.getIdByEmail(email))
@@ -54,7 +54,7 @@ public class AuthController {
     @PostMapping("/send-email")
     public ResponseEntity<String> sendTextEmail(@RequestBody @Valid AuthDto.SendTextEmailDto dto) {
         authService.sendHtmlEmail(dto.to(), dto.subject(),
-                authService.generatHtml(dto.text(), dto.username(), dto.to()));
+                authService.generatHtml(authService.generateCode(), dto.username(), dto.to()));
 
         return ResponseEntity.ok("email send with success");
     }
@@ -70,5 +70,4 @@ public class AuthController {
                 .message("code valid")
                 .build());
     }
-
 }
