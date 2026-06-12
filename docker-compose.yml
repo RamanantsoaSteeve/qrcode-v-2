@@ -28,9 +28,10 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/steve_db
-      - SPRING_DATASOURCE_USERNAME=steve_user
-      - SPRING_DATASOURCE_PASSWORD=StevePassword123!
+     # MODIFICATION : Remplacement des valeurs en dur par les variables du .env
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/${DB}
+      - SPRING_DATASOURCE_USERNAME=${DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     volumes:
       - ./backend:/app
