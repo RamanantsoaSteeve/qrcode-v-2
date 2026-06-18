@@ -1,0 +1,42 @@
+@media print {
+  /* Cacher tout le fond sombre et les formulaires */
+  body * {
+    visibility: hidden;
+    background: none !important;
+  }
+  
+  /* Afficher uniquement la carte blanche */
+  .section-to-print, .section-to-print * {
+    visibility: visible;
+  }
+
+  .section-to-print {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    box-shadow: none !important;
+    border: none !important;
+  }
+}
+@media print {
+  /* Cacher tout le fond sombre et les formulaires */
+  body * {
+    visibility: hidden;
+    background: none !important;
+  }
+  
+  /* Afficher uniquement la carte blanche */
+  .section-to-print, .section-to-print * {
+    visibility: visible;
+  }
+
+  .section-to-print {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    box-shadow: none !important;
+    border: none !important;
+  }
+}

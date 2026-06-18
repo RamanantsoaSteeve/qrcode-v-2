@@ -8,11 +8,15 @@ import { provideTransloco } from '@ngneat/transloco';
 
 import { routes } from './app.routes';
 import { TranslocoHttpLoader } from './transloco-loader';
+import { AuthIntercepter } from './interceptors/token';
+import { firebaseConfig } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideAuth(() => getAuth()),
     provideHttpClient(
+      withInterceptors([AuthIntercepter])
     ),
     provideRouter(routes),
     provideHttpClient(), provideTransloco({

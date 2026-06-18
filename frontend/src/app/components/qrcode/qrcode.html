@@ -1,0 +1,242 @@
+<div *transloco="let t"
+  class="min-h-screen bg-white text-zinc-900 font-sans p-6 md:p-12 relative overflow-hidden flex items-center justify-center">
+  <!-- Fond minimaliste à grain/grille discret -->
+  <div
+    class="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:32px_32px] opacity-30">
+  </div>
+
+  <div class="relative z-10 grid w-full max-w-5xl grid-cols-1 gap-12 lg:grid-cols-2 items-start">
+    <!-- SECTION FORMULAIRE (GAUCHE) -->
+    <form [formGroup]="formProduct"
+      class="bg-white border border-zinc-100 p-10 md:p-14 rounded-[3.5rem] shadow-2xl shadow-zinc-200/50">
+      <div class="mb-12">
+        <h1 class="text-4xl font-black tracking-tighter text-zinc-900 leading-none">
+          {{ t('GENERATOR.TITLE') }}
+          <span class="block text-zinc-400">{{ t('GENERATOR.TITLE_PRO') }}</span>
+        </h1>
+        <p class="mt-4 text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400">
+          {{ t('GENERATOR.SUBTITLE') }}
+        </p>
+      </div>
+
+      <div class="space-y-8">
+        <!-- Champ Nom -->
+        <div>
+          <label class="block mb-3 text-[10px] font-black tracking-[0.2em] text-zinc-900 uppercase">
+            {{ t('GENERATOR.LABEL_NAME') }}
+          </label>
+          <input formControlName="name" type="text" [placeholder]="t('GENERATOR.PLACEHOLDER_NAME')"
+            class="w-full px-8 py-5 text-zinc-900 font-bold border border-zinc-100 bg-zinc-50 rounded-[2rem] placeholder:text-zinc-300 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:bg-white transition-all" />
+        </div>
+
+        <!-- Champ Prix -->
+        <div>
+          <label class="block mb-3 text-[10px] font-black tracking-[0.2em] text-zinc-900 uppercase">
+            {{ t('GENERATOR.LABEL_PRICE') }}
+          </label>
+          <div
+            class="relative flex items-center bg-zinc-50 border border-zinc-100 rounded-[2rem] overflow-hidden focus-within:ring-2 focus-within:ring-zinc-900">
+            <input formControlName="price" type="number" oninput="if (this.value < 0) this.value = 1;"
+              [placeholder]="t('GENERATOR.PLACEHOLDER_PRICE')"
+              class="w-full px-8 py-5 text-zinc-900 font-bold bg-transparent placeholder:text-zinc-300 focus:outline-none" />
+
+            <select (change)="currency.set($any($event.target).value)"
+              class="mr-3 px-5 py-2 text-[10px] font-black text-white bg-zinc-900 rounded-full cursor-pointer hover:bg-black transition-colors appearance-none">
+              <option value="MGA">MGA</option>
+              <option value="EUR">EUR</option>
+              <option value="USD">USD</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Boutons Générer et Clear -->
+        <div class="flex gap-4 pt-4">
+          <button type="button" (click)="onSave()" [disabled]="formProduct.invalid"
+            class="flex-[2] bg-zinc-900 hover:bg-black text-white py-6 rounded-[2rem] text-xs font-black uppercase tracking-[0.3em] transition-all transform active:scale-95 flex items-center justify-center gap-3 disabled:opacity-10">
+            <span>{{ t('GENERATOR.BTN_GENERATE') }}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </button>
+
+          @if (qrcode()) {
+          <button type="button" (click)="qrcode.set('')"
+            class="flex-1 bg-white border-2 border-zinc-100 text-zinc-900 py-6 rounded-[2rem] font-black text-xs uppercase transition-all hover:bg-zinc-50 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          }
+        </div>
+
+        <!-- QR Code Preview -->
+        @if (isSave()) {
+        <div class="mt-12 flex justify-center animate-in fade-in zoom-in duration-500">
+          <div id="section-to-print"
+            class="bg-white p-10 rounded-[3rem] border border-zinc-100 shadow-2xl w-full max-w-[340px] flex flex-col items-center relative group">
+            <div
+              class="absolute px-6 py-3 font-black text-xs tracking-widest text-white bg-zinc-900 shadow-xl -top-4 -right-4 rounded-full">
+              {{ formProduct.value.price }} {{ currency() }}
+            </div>
+
+            <div
+              class="flex items-center justify-center w-full aspect-square overflow-hidden border border-zinc-50 rounded-[2.5rem] bg-zinc-50/50 p-6">
+              <img [src]="qrcode()" alt="qrcode" class="w-full h-full mix-blend-multiply" />
+            </div>
+
+            <p class="mt-6 text-[10px] font-black tracking-[0.4em] text-center uppercase text-zinc-900">
+              {{ formProduct.value.name }}
+            </p>
+          </div>
+        </div>
+        }
+      </div>
+    </form>
+
+    <!-- SECTION REGLAGES (DROITE) -->
+    <div class="flex flex-col items-center lg:items-start space-y-8">
+      <div class="bg-zinc-50 border border-zinc-100 p-10 rounded-[3.5rem] w-full max-w-[380px]">
+        <h4 class="text-[10px] font-black tracking-[0.3em] text-zinc-900 mb-8 uppercase text-center">
+          {{ t('QR_DIMENSIONS_2.TITLE') }}
+        </h4>
+        <form [formGroup]="formDimension" class="space-y-6">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block mb-2 text-[9px] font-black tracking-widest text-zinc-400 uppercase">
+                {{ t('QR_DIMENSIONS_2.COLUMNS') }}</label>
+              <input formControlName="column" type="number"
+                class="w-full px-5 py-4 bg-white border border-zinc-100 rounded-2xl font-bold focus:ring-2 focus:ring-zinc-900 outline-none transition-all" />
+            </div>
+            <div>
+              <label class="block mb-2 text-[9px] font-black tracking-widest text-zinc-400 uppercase">
+                {{ t('QR_DIMENSIONS_2.ROWS') }}</label>
+              <input formControlName="rows" type="number"
+                class="w-full px-5 py-4 bg-white border border-zinc-100 rounded-2xl font-bold focus:ring-2 focus:ring-zinc-900 outline-none transition-all" />
+            </div>
+          </div>
+          <div>
+            <label class="block mb-2 text-[9px] font-black tracking-widest text-zinc-400 uppercase">
+              {{ t('QR_DIMENSIONS_2.PAGES') }}</label>
+            <input formControlName="pages" type="number"
+              class="w-full px-5 py-4 bg-white border border-zinc-100 rounded-2xl font-bold focus:ring-2 focus:ring-zinc-900 outline-none transition-all" />
+          </div>
+        </form>
+      </div>
+
+      @if (isSave()) {
+      <button (click)="printProduct()"
+        class="group flex items-center gap-4 py-4 px-8 rounded-full border-2 border-zinc-900 text-zinc-900 font-black text-xs uppercase tracking-[0.3em] hover:bg-zinc-900 hover:text-white transition-all duration-500">
+        {{ t('GENERATOR.LINK_PRINT') }}
+        <span class="w-2 h-2 bg-zinc-900 group-hover:bg-white rounded-full animate-pulse"></span>
+      </button>
+      }
+    </div>
+
+    <!-- POPUP PREVIEW -->
+    @if (showPopup()) {
+    <div class="fixed inset-0 z-[100] flex items-center justify-center p-6 md:p-12">
+      <div (click)="showPopup.set(false)" class="absolute inset-0 bg-zinc-900/40 backdrop-blur-md transition-opacity">
+      </div>
+
+      <div
+        class="relative bg-white w-full max-w-6xl h-[90vh] rounded-[4rem] border border-zinc-100 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col scale-in-center">
+        <!-- HEADER POPUP -->
+        <div class="relative flex items-center justify-between px-12 py-10 border-b border-zinc-50">
+          <div class="space-y-1">
+            <h3 class="text-2xl font-black tracking-tighter text-zinc-900 uppercase">
+              {{ t('PREVIEW_2.TITLE') }}
+            </h3>
+            <p class="text-[9px] text-zinc-400 font-black uppercase tracking-[0.4em]">
+              {{ t('PREVIEW_2.SUBTITLE') }}
+            </p>
+          </div>
+
+          <div class="flex items-center gap-6">
+            <button (click)="onSave()"
+              class="flex items-center gap-3 px-8 py-4 bg-zinc-900 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-black transition-all shadow-xl">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                  d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+              </svg>
+              {{ t('ACTIONS.SAVE') || 'Enregistrer' }}
+            </button>
+
+            <button (click)="showPopup.set(false)"
+              class="p-4 bg-zinc-50 rounded-full hover:bg-zinc-100 transition-all text-zinc-400 hover:text-zinc-900">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ZONE IFRAME -->
+        <div class="flex-grow bg-zinc-50/50">
+          @if (pdfPreviewUrl()) {
+          <iframe [src]="pdfPreviewUrl()" width="100%" height="100%" class="border-none"></iframe>
+          } @else {
+          <div class="flex flex-col items-center justify-center h-full gap-6">
+            <div class="w-12 h-12 border-[4px] border-zinc-200 border-t-zinc-900 rounded-full animate-spin"></div>
+            <p class="text-[10px] font-black tracking-[0.5em] text-zinc-400 uppercase">
+              Synchronisation...
+            </p>
+          </div>
+          }
+        </div>
+
+        <!-- FOOTER POPUP -->
+        <div class="flex items-center justify-center py-8 bg-white border-t border-zinc-50">
+          <p class="text-[9px] text-zinc-300 font-black uppercase tracking-[0.5em] flex items-center gap-6">
+            <span class="w-12 h-[1px] bg-zinc-100"></span>
+            {{ t('PREVIEW_2.FOOTER_INFO') }}
+            <span class="w-12 h-[1px] bg-zinc-100"></span>
+          </p>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- BOUTON RETOUR -->
+    <button [routerLink]="['/interaction']"
+      class="group fixed bottom-10 left-10 z-20 flex items-center gap-5 px-8 py-5 bg-white border border-zinc-100 rounded-full shadow-2xl hover:shadow-zinc-200 transition-all active:scale-95">
+      <div
+        class="flex items-center justify-center w-10 h-10 bg-zinc-900 rounded-full group-hover:-translate-x-1 transition-transform">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M15 19l-7-7 7-7" />
+        </svg>
+      </div>
+      <span class="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-900">
+        {{ t('ACTIONS_2.BACK') }}
+      </span>
+    </button>
+  </div>
+</div>
+
+@if (isSave()) {
+<!-- Toast Success : Style Nexus Studio -->
+<div class="fixed top-8 right-8 z-[100] animate-in fade-in slide-in-from-top-4 duration-500">
+  <div
+    class="flex items-center gap-6 bg-white border border-zinc-100 p-5 rounded-[2rem] shadow-[0_20px_50px_-10px_rgba(0,0,0,0.1)] min-w-[280px]">
+    <!-- Icone Success : Zinc-900 -->
+    <div class="flex-shrink-0 w-10 h-10 bg-zinc-900 rounded-full flex items-center justify-center shadow-lg">
+      <svg xmlns="http://www.w3.org" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7" />
+      </svg>
+    </div>
+
+    <!-- Message -->
+    <div class="flex flex-col">
+      <span class="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-900">Success</span>
+      <p class="text-xs font-bold text-zinc-400">It's saved</p>
+    </div>
+
+    <!-- Petite barre de progression de fermeture (optionnelle) -->
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-12 h-1 bg-zinc-100 rounded-full mb-2 opacity-50"></div>
+  </div>
+</div>
+}

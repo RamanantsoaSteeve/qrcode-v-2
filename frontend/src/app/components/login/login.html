@@ -1,0 +1,97 @@
+<div *transloco="let t"
+  class="min-h-screen bg-[#FDFDFD] flex items-center justify-center p-6 relative overflow-hidden font-sans selection:bg-zinc-900 selection:text-white">
+  <!-- DÉCOR ARCHITECTURAL : Lignes de structure claires -->
+  <div class="absolute top-0 left-1/2 w-px h-full bg-zinc-100 hidden lg:block"></div>
+  <div class="absolute top-1/2 left-0 w-full h-px bg-zinc-100 hidden lg:block"></div>
+
+  <div
+    class="relative w-full max-w-[480px] bg-white border border-zinc-200/60 p-10 md:p-14 rounded-[3.5rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.04)]">
+    <!-- HEADER : Style Studio -->
+    <div class="mb-12">
+      <div class="w-12 h-1 bg-zinc-900 mb-8 rounded-full"></div>
+      <h1 class="text-4xl font-black text-zinc-900 tracking-tighter leading-none mb-3">
+        {{ t('LOGIN.TITLE') }}
+      </h1>
+      <p class="text-zinc-400 text-sm font-medium uppercase tracking-widest italic">
+        {{ t('LOGIN.SUBTITLE') }}
+      </p>
+    </div>
+
+    <form [formGroup]="formLogin" class="space-y-6">
+      <!-- IDENTITÉ -->
+      <div class="group">
+        <label
+          class="block text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em] mb-2.5 ml-1 transition-colors group-focus-within:text-zinc-900">{{
+          t('LOGIN.LABEL_IDENTITY') }}</label>
+        <input formControlName="email" type="text" [placeholder]="t('LOGIN.PLACEHOLDER_IDENTITY')"
+          class="w-full px-6 py-4.5 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-900 placeholder-zinc-300 outline-none focus:ring-0 focus:border-zinc-900 focus:bg-white transition-all duration-300" />
+
+        @if (formLogin.get('email')?.touched && formLogin.get('email')?.errors?.['email']) {
+        <p class="mt-2 text-[10px] font-bold text-red-500 uppercase tracking-tight flex items-center px-1">
+          <span class="mr-1.5 text-xs">●</span> {{ t('REGISTER.ERRORS.EMAIL_INVALID') }}
+        </p>
+        }
+      </div>
+
+      <!-- MOT DE PASSE -->
+      <div class="group">
+        <div class="flex justify-between mb-2.5 ml-1">
+          <label
+            class="text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em] transition-colors group-focus-within:text-zinc-900">{{
+            t('LOGIN.LABEL_PASSWORD') }}</label>
+          <a [routerLink]="['/forgot-password']"
+            class="text-[10px] font-bold text-zinc-400 hover:text-zinc-900 transition-colors uppercase tracking-tighter underline underline-offset-4 decoration-zinc-200">
+            {{ t('LOGIN.FORGOT_PASSWORD') }}
+          </a>
+        </div>
+        <input type="password" formControlName="password" [placeholder]="t('LOGIN.PLACEHOLDER_PASSWORD')"
+          class="w-full px-6 py-4.5 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-900 placeholder-zinc-300 outline-none focus:ring-0 focus:border-zinc-900 focus:bg-white transition-all duration-300" />
+
+        @if (foundNamemail()) {
+        <p class="mt-2 text-[10px] font-bold text-red-500 uppercase tracking-tight flex items-center px-1">
+          <span class="mr-1.5 text-xs">●</span> {{ t('LOGIN.ERROR_NOT_FOUND') }}
+        </p>
+        }
+      </div>
+
+      <div class="flex items-center gap-3 ml-1">
+        <input type="checkbox" id="remember"
+          class="w-4 h-4 rounded-md border-zinc-200 bg-zinc-50 text-zinc-900 focus:ring-0 cursor-pointer" />
+        <label for="remember" class="text-[11px] font-bold text-zinc-500 uppercase tracking-wide cursor-pointer">{{
+          t('LOGIN.REMEMBER_ME') }}</label>
+      </div>
+
+      <button (click)="login()" [disabled]="formLogin.invalid" type="button"
+        class="w-full py-5 bg-zinc-900 text-white font-black text-[11px] uppercase tracking-[0.3em] rounded-2xl transition-all active:scale-[0.98] disabled:opacity-10 hover:bg-zinc-800 shadow-xl shadow-zinc-200">
+        {{ isLoading() ? '...' : t('LOGIN.BTN_LOGIN') }}
+      </button>
+    </form>
+
+    <!-- SOCIALS SECTION -->
+    <div class="mt-12 pt-10 border-t border-zinc-100">
+      <div class="grid grid-cols-2 gap-4">
+        <button (click)="googleSignIn()" [disabled]="isClick()"
+          class="flex items-center justify-center py-3.5 border border-zinc-100 rounded-xl hover:cursor-pointer hover:bg-zinc-50 transition-all text-[11px] font-black uppercase tracking-tighter text-zinc-900">
+          Google
+        </button>
+        <button
+          class="hover:cursor-pointer flex items-center justify-center py-3.5 border border-zinc-100 rounded-xl hover:bg-zinc-50 transition-all text-[11px] font-black uppercase tracking-tighter text-zinc-900">
+          Facebook
+        </button>
+      </div>
+    </div>
+
+    <!-- SWITCH PAGE -->
+    <p class="text-center text-zinc-400 text-[11px] font-bold mt-10 uppercase tracking-tight">
+      {{ t('LOGIN.NO_ACCOUNT') }}
+      <a [routerLink]="['/register']"
+        class="text-zinc-900 font-black border-b border-zinc-900 ml-1 hover:text-zinc-500 hover:border-zinc-500 transition-all">{{
+        t('LOGIN.CREATE_ACCOUNT') }}</a>
+    </p>
+  </div>
+
+  <!-- COPYRIGHT DISCRET -->
+  <div class="absolute bottom-8 text-[9px] font-black text-zinc-300 uppercase tracking-[1em] opacity-40">
+    Nexus Studio
+  </div>
+</div>

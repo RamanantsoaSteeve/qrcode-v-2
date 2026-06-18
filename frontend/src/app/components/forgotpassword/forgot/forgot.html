@@ -1,0 +1,97 @@
+<div *transloco="let t"
+  class="min-h-screen bg-[#F8FAFC] flex items-center justify-center p-4 font-sans selection:bg-zinc-900 selection:text-white">
+  <!-- Card Principal -->
+  <div
+    class="bg-white border border-zinc-200 p-10 rounded-[2.5rem] shadow-[0_20px_50px_-12px_rgba(0,0,0,0.05)] w-full max-w-md relative overflow-hidden">
+
+    <div class="text-center mb-10">
+      <div
+        class="inline-flex items-center justify-center w-14 h-14 bg-zinc-900 rounded-2xl mb-6 shadow-xl shadow-zinc-200 rotate-3 transition-transform hover:rotate-0">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+        </svg>
+      </div>
+      <h1 class="text-3xl font-black text-zinc-900 tracking-tighter">{{ t('FORGOT_PASSWORD_2.TITLE') }}</h1>
+      <p class="text-zinc-400 text-sm font-medium mt-2 italic">{{ t('FORGOT_PASSWORD_2.SUBTITLE') }}</p>
+    </div>
+
+    <form [formGroup]="formEmail" class="space-y-6">
+      <div>
+        <label class="block text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em] mb-2 ml-1">{{
+          t('LOGIN_2.LABEL_IDENTITY') }}</label>
+        <input formControlName="email" type="email" [placeholder]="t('LOGIN_2.PLACEHOLDER_IDENTITY')"
+          class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-900 placeholder-zinc-300 outline-none focus:border-zinc-900 focus:bg-white transition-all" />
+      </div>
+      @if (formEmail.get('email')?.touched && formEmail.get('email')?.errors?.['email']){
+      <p class="mt-2 text-xs font-bold text-red-500 flex items-center px-1">
+        {{ t('REGISTER_2.ERRORS.EMAIL_INVALID') }}
+      </p>
+      }
+
+      <button [disabled]="formEmail.invalid" (click)="reset()" type="submit"
+        class="w-full py-5 bg-zinc-900 text-white font-black text-xs uppercase tracking-[0.2em] rounded-2xl shadow-xl shadow-zinc-200 transition-all active:scale-[0.98] disabled:opacity-10 hover:bg-zinc-800">
+        {{ t('FORGOT_PASSWORD_2.BTN_SEND') }}
+      </button>
+
+      <div class="text-center mt-8">
+        <a [routerLink]="['/login']"
+          class="text-[11px] font-black text-zinc-400 hover:text-zinc-900 uppercase tracking-widest transition-colors flex items-center justify-center">
+          <span class="mr-2">←</span> {{ t('FORGOT_PASSWORD_2.BACK_TO_LOGIN') }}
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- OVERLAY DE VÉRIFICATION -->
+@if (sendEmail()) {
+<form *transloco="let t" [formGroup]="formCheck"
+  class="fixed inset-0 bg-zinc-900/60 backdrop-blur-md flex items-center justify-center p-4 z-[100]">
+
+  <div class="relative bg-white rounded-[3rem] shadow-2xl p-10 max-w-sm w-full border border-white overflow-hidden">
+
+    <div class="text-center mb-10">
+      <div class="inline-flex items-center justify-center w-14 h-14 bg-zinc-100 rounded-2xl mb-6 text-zinc-900">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+      </div>
+      <h2 class="text-3xl font-black text-zinc-900 tracking-tighter leading-none">{{ t('VERIFICATION_2.TITLE') }}</h2>
+      <p class="text-zinc-400 mt-3 text-xs font-bold uppercase tracking-wide">{{ t('VERIFICATION_2.SUBTITLE') }}</p>
+    </div>
+
+    <div class="flex justify-between gap-3 mb-10">
+      <input formControlName="value1" type="text" inputmode="numeric" maxlength="1" placeholder="•"
+        class="w-14 h-16 text-center text-2xl font-black bg-zinc-50 border-2 border-transparent rounded-2xl focus:border-zinc-900 focus:bg-white focus:scale-105 outline-none transition-all placeholder-zinc-200" />
+      <input formControlName="value2" type="text" inputmode="numeric" maxlength="1" placeholder="•"
+        class="w-14 h-16 text-center text-2xl font-black bg-zinc-50 border-2 border-transparent rounded-2xl focus:border-zinc-900 focus:bg-white focus:scale-105 outline-none transition-all placeholder-zinc-200" />
+      <input formControlName="value3" type="text" inputmode="numeric" maxlength="1" placeholder="•"
+        class="w-14 h-16 text-center text-2xl font-black bg-zinc-50 border-2 border-transparent rounded-2xl focus:border-zinc-900 focus:bg-white focus:scale-105 outline-none transition-all placeholder-zinc-200" />
+      <input formControlName="value4" type="text" inputmode="numeric" maxlength="1" placeholder="•"
+        class="w-14 h-16 text-center text-2xl font-black bg-zinc-50 border-2 border-transparent rounded-2xl focus:border-zinc-900 focus:bg-white focus:scale-105 outline-none transition-all placeholder-zinc-200" />
+    </div>
+
+    @if (formCheck.invalid && formCheck.touched) {
+    <div
+      class="mb-6 flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 rounded-xl border border-red-100 transition-all animate-pulse">
+      <span class="text-[10px] font-black uppercase tracking-tight leading-tight">
+        {{ t('REGISTER_2.ERRORS.DIGITS_ONLY') }}
+      </span>
+    </div>
+    }
+
+    <button [disabled]="formCheck.invalid" (click)="recoverCode()"
+      class="w-full bg-zinc-900 py-5 rounded-2xl text-white font-black text-xs uppercase tracking-[0.3em] shadow-xl shadow-zinc-200 transition-all hover:bg-zinc-800 active:scale-95 disabled:opacity-10">
+      {{ t('VERIFICATION_2.BTN_CONFIRM') }}
+    </button>
+
+    <p class="text-center mt-10 text-[10px] font-black text-zinc-300 uppercase tracking-widest">
+      {{ t('VERIFICATION_2.FOOTER_TEXT') }}
+      <a href="#" class="text-zinc-900 border-b border-zinc-900 ml-1">{{ t('VERIFICATION_2.RESEND') }}</a>
+    </p>
+  </div>
+</form>
+}

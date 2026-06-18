@@ -1,13 +1,13 @@
 services:
-  # --- LE FRIGO (POSTGRESQL 16 - Plus stable et moderne) ---
+  # --- LE FRIGO (POSTGRESQL 16) ---
   db:
     image: postgres:16-alpine
     container_name: global_postgres_db
     restart: unless-stopped
     environment:
-      POSTGRES_DB: steve_db
-      POSTGRES_USER: steve_user
-      POSTGRES_PASSWORD: StevePassword123!
+      POSTGRES_DB: ${DB}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
@@ -20,7 +20,17 @@ services:
     networks:
       - dev-network
 
-  # --- LE CUISINIER (SPRING BOOT - Mis à jour en Java 21) ---
+  # --- LE GARDE-MANGER (REDIS pour les codes temporaires) ---
+  redis:
+    image: redis:7-alpine
+    container_name: redis_cache_dev
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - dev-network
+
+  # --- LE CUISINIER (SPRING BOOT) ---
   api:
     image: maven:3.9-eclipse-temurin-21-alpine
     container_name: spring_api_dev
@@ -28,22 +38,29 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/steve_db
-      - SPRING_DATASOURCE_USERNAME=steve_user
-      - SPRING_DATASOURCE_PASSWORD=StevePassword123!
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/${DB}
+      - SPRING_DATASOURCE_USERNAME=${DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      # Configuration Redis
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_PORT=6379
+      # AJOUT : Variables manquantes pour l'envoi d'emails dans Docker
+      - MAIL_USER=${MAIL_USER}
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
     volumes:
       - ./backend:/app
-      - /home/steeve/Applications/dev_cache/maven_repository:/root/.m2 # Ton cache local
-    # CORRECTION : Prêt pour le mode offline (assure-toi d'avoir enlevé mysql du pom.xml)
-    entrypoint: ["mvn", "spring-boot:run", "-o"] 
+      - /home/steeve/Applications/dev_cache/maven_repository:/root/.m2
+    entrypoint: ["mvn", "spring-boot:run"] 
     depends_on:
       db:
         condition: service_healthy
+      redis:
+        condition: service_started
     networks:
       - dev-network
-
-  # --- LE SERVEUR (ANGULAR - Mis à jour en Node 22 LTS) ---
+      
+  # --- LE SERVEUR (ANGULAR) ---
   web:
     image: node:22-alpine
     container_name: angular_web_dev
@@ -53,7 +70,6 @@ services:
     volumes:
       - ./frontend:/app
       - /home/steeve/Applications/dev_cache/npm_cache:/.npm
-    # CORRECTION : On lance directement le ng serve du projet pour éviter le plantage des arguments npm
     entrypoint: ["sh", "-c", "./node_modules/.bin/ng serve --host 0.0.0.0"]   
     depends_on:
       - api

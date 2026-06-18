@@ -1,0 +1,130 @@
+<div *transloco="let t" class="min-h-screen bg-white text-zinc-900 font-sans flex flex-col relative overflow-hidden">
+
+  <!-- HEADER UTILISATEUR : STYLE NAV BAR TOP -->
+  <nav
+    class="relative z-50 w-full px-8 py-6 flex justify-between items-center bg-white/80 backdrop-blur-md border-b border-zinc-100">
+    <div class="text-xl font-black tracking-tighter uppercase italic">Platform.</div>
+
+    <div class="flex items-center gap-4 group cursor-pointer">
+      <div class="text-right flex flex-col">
+        <span class="text-xs font-bold text-zinc-900 leading-none">{{ user() }}</span>
+        <span class="text-[9px] uppercase tracking-tighter text-zinc-400 font-medium">{{ t('MENU.USER_LEVEL') }}</span>
+      </div>
+      <div
+        class="w-10 h-10 rounded-full border border-zinc-200 flex items-center justify-center bg-zinc-50 group-hover:bg-zinc-900 group-hover:text-white transition-all duration-300">
+        <span class="text-xs font-bold">{{ user() }}</span>
+      </div>
+    </div>
+  </nav>
+
+  <main class="relative z-10 flex-1 flex flex-col md:flex-row">
+
+    <!-- SECTION GAUCHE : TITRE FIXE -->
+    <div class="w-full md:w-[40%] p-8 md:p-20 flex flex-col justify-center border-r border-zinc-100">
+      <div class="mb-4 inline-block px-2 py-1 bg-zinc-900 text-white text-[10px] font-bold uppercase tracking-widest">
+        Dashboard v2.0
+      </div>
+      <h1 class="text-5xl md:text-7xl font-black tracking-tighter leading-[0.9] text-zinc-900 mb-6">
+        {{ t('MENU.MAIN_TITLE') }} <br>
+        <span class="text-zinc-300">{{ t('MENU.MAIN_TITLE_ITALIC') }}</span>
+      </h1>
+      <p class="text-sm font-medium text-zinc-500 max-w-xs leading-relaxed">
+        {{ t('MENU.SUBTITLE') }}
+      </p>
+    </div>
+
+    <!-- SECTION DROITE : NAVIGATION VERTICALE -->
+    <div class="w-full md:w-[60%] flex flex-col">
+
+      <!-- CARTE 1 : GÉNÉRATEUR -->
+      <div [routerLink]="['/qrcode']"
+        class="group relative flex-1 p-8 md:p-16 border-b border-zinc-100 flex items-center justify-between cursor-pointer hover:bg-zinc-50 transition-colors duration-500">
+        <div class="flex items-center gap-8">
+          <div class="text-6xl md:text-8xl font-black text-zinc-100 group-hover:text-zinc-200 transition-colors">01
+          </div>
+          <div>
+            <h3 class="text-2xl md:text-4xl font-bold tracking-tight text-zinc-900">
+              {{ t('MENU.CARD_GENERATE.TITLE') }}
+              <span class="block text-zinc-400 font-light">{{ t('MENU.CARD_GENERATE.TITLE_LINE2') }}</span>
+            </h3>
+            <p
+              class="mt-2 text-xs text-zinc-400 font-medium uppercase tracking-wide group-hover:text-zinc-600 transition-colors">
+              {{ t('MENU.CARD_GENERATE.DESC') }}
+            </p>
+          </div>
+        </div>
+        <div
+          class="w-12 h-12 rounded-full border border-zinc-200 flex items-center justify-center group-hover:bg-zinc-900 group-hover:border-zinc-900 group-hover:text-white transition-all duration-300 -rotate-45 group-hover:rotate-0">
+          <svg xmlns="http://www.w3.org" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- CARTE 2 : INVENTAIRE -->
+      <div [routerLink]="['/dashboard']"
+        class="group relative flex-1 p-8 md:p-16 border-b border-zinc-100 flex items-center justify-between cursor-pointer hover:bg-zinc-50 transition-colors duration-500">
+        <div class="flex items-center gap-8">
+          <div class="text-6xl md:text-8xl font-black text-zinc-100 group-hover:text-zinc-200 transition-colors">02
+          </div>
+          <div>
+            <h3 class="text-2xl md:text-4xl font-bold tracking-tight text-zinc-900">
+              {{ t('MENU.CARD_INVENTORY.TITLE') }}
+              <span class="block text-zinc-400 font-light">{{ t('MENU.CARD_INVENTORY.TITLE_LINE2') }}</span>
+            </h3>
+            <p
+              class="mt-2 text-xs text-zinc-400 font-medium uppercase tracking-wide group-hover:text-zinc-600 transition-colors">
+              {{ t('MENU.CARD_INVENTORY.DESC') }}
+            </p>
+          </div>
+        </div>
+        <div
+          class="w-12 h-12 rounded-full border border-zinc-200 flex items-center justify-center group-hover:bg-zinc-900 group-hover:border-zinc-900 group-hover:text-white transition-all duration-300 -rotate-45 group-hover:rotate-0">
+          <svg xmlns="http://www.w3.org" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer Minimal -->
+  <footer class="p-8 border-t border-zinc-100 flex justify-between items-center">
+    <div class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest">
+      © {{ t('MENU.FOOTER') }}
+    </div>
+    <div class="flex gap-6">
+      <span class="text-[9px] font-bold text-zinc-300 uppercase italic">Quality First</span>
+      <span class="text-[9px] font-bold text-zinc-300 uppercase italic">Secure Cloud</span>
+    </div>
+  </footer>
+</div>
+
+@if (authService.showToast()) {
+<div class="fixed bottom-5 left-5 z-50 animate-in fade-in slide-in-from-left duration-300">
+  <div
+    class="flex items-center gap-3 bg-white/80 backdrop-blur-md border border-slate-200 p-4 rounded-2xl shadow-2xl shadow-indigo-100/50 min-w-[300px]">
+
+    <div
+      class="flex-shrink-0 w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-200">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+      </svg>
+    </div>
+
+    <div>
+      <h3 class="text-sm font-bold text-slate-800">Succès !</h3>
+      <p class="text-xs text-slate-500">Votre code a été vérifié.</p>
+    </div>
+
+    <button (click)="authService.showToast.set(false)"
+      class="ml-auto text-slate-400 hover:text-slate-600 transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+</div>
+}

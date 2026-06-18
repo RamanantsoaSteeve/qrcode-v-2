@@ -1,0 +1,72 @@
+<div *transloco="let t"
+  class="min-h-screen bg-[#F8FAFC] flex items-center justify-center p-4 font-sans selection:bg-zinc-900 selection:text-white">
+
+  <!-- Card Principal : Style Clean Studio -->
+  <div
+    class="bg-white border border-zinc-200 p-10 rounded-[2.5rem] shadow-[0_20px_50px_-12px_rgba(0,0,0,0.05)] w-full max-w-md relative overflow-hidden">
+
+    <div class="text-center mb-10">
+      <div
+        class="inline-flex items-center justify-center w-14 h-14 bg-zinc-900 rounded-2xl mb-6 shadow-xl shadow-zinc-200 rotate-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+      </div>
+      <h1 class="text-3xl font-black text-zinc-900 tracking-tighter leading-none">{{ t('RESET_PASSWORD.TITLE') }}</h1>
+      <p class="text-zinc-400 text-sm font-medium mt-3 italic">{{ t('RESET_PASSWORD.SUBTITLE') }}</p>
+    </div>
+
+    <form [formGroup]="formPassword" class="space-y-6">
+
+      <!-- Nouveau Mot de Passe -->
+      <div>
+        <label
+          class="block text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em] mb-2.5 ml-1 transition-colors">
+          {{ t('RESET_PASSWORD.LABEL_NEW') }}
+        </label>
+        <input formControlName="password" type="password" [placeholder]="t('RESET_PASSWORD.PLACEHOLDER')"
+          class="w-full px-6 py-4.5 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-900 placeholder-zinc-300 outline-none focus:ring-0 focus:border-zinc-900 focus:bg-white transition-all duration-300" />
+
+        @if (formPassword.get('password')?.touched && formPassword.get('password')?.errors?.['pattern']){
+        <p class="mt-2 text-[10px] font-bold text-red-500 uppercase tracking-tight flex items-center px-1">
+          <span class="mr-1.5 text-xs">●</span> {{ t('REGISTER_USER.ERRORS.PASS_WEAK') }}
+        </p>
+        }
+      </div>
+
+      <!-- Confirmation -->
+      <div>
+        <label
+          class="block text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em] mb-2.5 ml-1 transition-colors">
+          {{ t('RESET_PASSWORD.LABEL_CONFIRM') }}
+        </label>
+        <input formControlName="checkpassword" type="password" [placeholder]="t('RESET_PASSWORD.PLACEHOLDER')"
+          class="w-full px-6 py-4.5 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-900 placeholder-zinc-300 outline-none focus:ring-0 focus:border-zinc-900 focus:bg-white transition-all duration-300" />
+
+        @if (formPassword.get('checkpassword')?.touched && formPassword.get('checkpassword')?.errors?.['mustMatch']){
+        <p class="mt-2 text-[10px] font-bold text-red-500 uppercase tracking-tight flex items-center px-1">
+          <span class="mr-1.5 text-xs">●</span> {{ t('REGISTER_USER.ERRORS.PASS_MISMATCH') }}
+        </p>
+        }
+      </div>
+
+      <!-- Bouton Submit -->
+      <button [disabled]="formPassword.invalid" (click)="recover()" type="submit"
+        class="w-full py-5 bg-zinc-900 text-white font-black text-[11px] uppercase tracking-[0.3em] rounded-2xl shadow-xl shadow-zinc-200 transition-all active:scale-[0.98] disabled:opacity-10 hover:bg-zinc-800 mt-4">
+        {{ t('RESET_PASSWORD.BTN_SUBMIT') }}
+      </button>
+
+    </form>
+
+    <!-- Footer Link -->
+    <div class="mt-8 text-center">
+      <a [routerLink]="['/login']"
+        class="text-[10px] font-black text-zinc-400 hover:text-zinc-900 transition-colors uppercase tracking-[0.2em]">
+        {{ t('FORGOT_PASSWORD_2.BACK_TO_LOGIN') }}
+      </a>
+    </div>
+
+  </div>
+</div>

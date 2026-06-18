@@ -1,0 +1,423 @@
+<div *transloco="let t" class="min-h-screen bg-[#F8FAFC] text-slate-800 font-sans p-3 md:p-8 relative overflow-hidden">
+  <!-- Fond décoratif discret -->
+  <div
+    class="absolute top-[-10%] right-[-5%] w-[300px] md:w-[400px] h-[300px] md:h-[400px] bg-slate-200/50 rounded-full blur-[80px] md:blur-[120px]">
+  </div>
+  <div
+    class="absolute bottom-[-10%] left-[-5%] w-[300px] md:w-[400px] h-[300px] md:h-[400px] bg-blue-50 rounded-full blur-[80px] md:blur-[120px]">
+  </div>
+
+  <div class="relative z-10 max-w-6xl mx-auto">
+    <!-- BANDEAU INFORMATION UTILISATEUR -->
+    <header
+      class="bg-white border border-slate-200 rounded-[1.5rem] md:rounded-[2.5rem] p-4 md:p-6 mb-4 md:mb-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+      <div class="flex items-center gap-4 md:gap-6 w-full md:w-auto">
+        <!-- Avatar avec status -->
+        <div class="relative shrink-0">
+          <div
+            class="flex items-center justify-center w-14 h-14 md:w-16 md:h-16 text-xl md:text-2xl border border-slate-100 shadow-sm rounded-2xl bg-slate-50">
+            👤
+          </div>
+          <div
+            class="absolute -bottom-1 -right-1 w-4 h-4 md:w-5 md:h-5 bg-emerald-500 border-4 border-white rounded-full">
+          </div>
+        </div>
+
+        <!-- Détails User -->
+        <div class="overflow-hidden">
+          <h2 class="text-xl md:text-2xl font-black leading-none tracking-tight text-slate-900 truncate">
+            {{ nameUser() }}
+          </h2>
+          <p
+            class="text-slate-400 text-[9px] md:text-[10px] font-bold mt-2 tracking-[0.1em] md:tracking-[0.2em] uppercase">
+            {{ t('DASHBOARD.ROLE') }} <span class="mx-1 text-slate-200">|</span>
+            {{ t('DASHBOARD.SESSION') }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Stats rapides User -->
+      <div class="flex w-full gap-3 md:gap-4 md:w-auto">
+        <div
+          class="flex-1 px-4 md:px-6 py-3 text-center border md:flex-none bg-slate-50/50 rounded-2xl border-slate-100">
+          <p class="text-[9px] md:text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+            {{ t('DASHBOARD.STATS.PRODUCTS') }}
+          </p>
+          <p class="text-lg md:text-xl font-black text-slate-900">
+            {{ filteredProducts().length }}
+          </p>
+        </div>
+        <div class="flex-1 px-4 md:px-6 py-3 text-center bg-slate-900 shadow-lg md:flex-none rounded-2xl">
+          <p class="text-[9px] md:text-[10px] text-slate-500 font-bold uppercase tracking-widest">
+            {{ t('DASHBOARD.STATS.PLAN') }}
+          </p>
+          <p class="text-lg md:text-xl font-black text-white uppercase">
+            {{ t('DASHBOARD.STATS.PREMIUM') }}
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <!-- ZONE TABLEAU DES PRODUITS -->
+    <section
+      class="bg-white border border-slate-200 rounded-[1.5rem] md:rounded-[2.5rem] shadow-xl shadow-slate-200/50 overflow-hidden">
+      <!-- Barre de recherche et Titre -->
+      <div
+        class="flex flex-col items-start md:items-center justify-between gap-4 p-5 md:p-8 border-b border-slate-50 md:flex-row">
+        <h3 class="text-lg md:text-xl font-black tracking-tighter text-slate-900 uppercase italic">
+          {{ t('DASHBOARD.INVENTORY.TITLE') }}
+        </h3>
+        <div class="relative w-full md:w-80">
+          <input [(ngModel)]="nameProduct" type="text" [placeholder]="t('DASHBOARD.INVENTORY.SEARCH_PLACEHOLDER')"
+            class="w-full px-11 py-3 text-sm transition-all border border-slate-100 bg-slate-50 rounded-xl focus:bg-white focus:border-slate-900 focus:ring-0 outline-none" />
+          <span class="absolute -translate-y-1/2 left-4 top-1/2 opacity-20">🔍</span>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse min-w-[600px] md:min-w-full">
+          <thead>
+            <tr
+              class="text-slate-400 text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] font-black border-b border-slate-50">
+              <th class="px-5 md:px-8 py-4 md:py-6">{{ t('DASHBOARD.INVENTORY.COLUMNS.NAME') }}</th>
+              <th class="px-5 md:px-8 py-4 md:py-6 hidden sm:table-cell">
+                {{ t('DASHBOARD.INVENTORY.COLUMNS.ID') }}
+              </th>
+              <th class="px-5 md:px-8 py-4 md:py-6">
+                {{ t('DASHBOARD.INVENTORY.COLUMNS.PRICE') }}
+              </th>
+              <th class="px-5 md:px-8 py-4 md:py-6 hidden md:table-cell">
+                {{ t('DASHBOARD.INVENTORY.COLUMNS.STATUS') }}
+              </th>
+              <th class="px-5 md:px-8 py-4 md:py-6 text-right">
+                {{ t('DASHBOARD.INVENTORY.COLUMNS.ACTIONS') }}
+              </th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-50">
+            @for (product of filteredProducts() | slice: start : end; track product.id) {
+            <tr class="transition-all group hover:bg-slate-50">
+              <td class="px-5 md:px-8 py-4 md:py-6">
+                <div class="flex items-center gap-3 md:gap-4">
+                  <div
+                    class="flex shrink-0 items-center justify-center w-9 h-9 md:w-10 md:h-10 bg-slate-100 rounded-xl group-hover:bg-slate-900 group-hover:text-white transition-all">
+                    <span class="text-xs">✓</span>
+                  </div>
+                  <span class="font-bold text-slate-900 truncate max-w-[120px] md:max-w-none">{{
+                    product.name
+                    }}</span>
+                </div>
+              </td>
+              <td #elementproduct [id]="product.id"
+                class="px-5 md:px-8 py-4 md:py-6 font-mono text-[10px] md:text-[11px] font-bold text-slate-400 hidden sm:table-cell">
+                #{{ product.id }}
+              </td>
+              <td class="px-5 md:px-8 py-4 md:py-6">
+                <span class="text-base md:text-lg font-black text-slate-900 tracking-tighter whitespace-nowrap">{{
+                  product.price.toLocaleString('de-DE') }} {{ product.currency }}</span>
+              </td>
+              <td class="px-5 md:px-8 py-4 md:py-6 hidden md:table-cell">
+                <span
+                  class="bg-emerald-50 text-emerald-600 px-3 py-1 rounded-lg text-[10px] font-black uppercase border border-emerald-100 tracking-widest">
+                  {{ t('DASHBOARD.INVENTORY.STATUS_LABELS.GENERATED') }}
+                </span>
+              </td>
+              <td class="px-5 md:px-8 py-4 md:py-6 space-x-1 md:space-x-2 text-right whitespace-nowrap">
+                <button [disabled]="isPrinting()" (click)="showPopupDimension(elementproduct.id)"
+                  class="p-2 md:p-2.5 text-slate-400 border border-transparent rounded-xl hover:bg-white hover:border-slate-200 hover:text-slate-900 transition-all">
+                  🖨️
+                </button>
+                <button (click)="showItems(elementproduct.id)"
+                  class="p-2 md:p-2.5 text-red-300 hover:text-red-600 transition-all">
+                  🗑️
+                </button>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Footer du Tableau -->
+      <div
+        class="p-5 md:p-8 bg-slate-50/50 flex flex-col md:flex-row gap-4 justify-between items-center text-[10px] font-black text-slate-400 uppercase tracking-widest">
+        <p>
+          {{
+          t('DASHBOARD.INVENTORY.PAGINATION.SHOWING', {
+          count: end - start,
+          total: filteredProducts().length,
+          })
+          }}
+        </p>
+        <div class="flex gap-2 w-full md:w-auto">
+          <button (click)="changePage(-1)" [disabled]="currentPage() === 1"
+            class="flex-1 md:flex-none px-5 py-3 md:py-2.5 transition-all rounded-xl border border-slate-200" [ngClass]="{
+              'bg-white text-slate-900 hover:border-slate-900': currentPage() !== 1,
+              'opacity-30 cursor-not-allowed': currentPage() === 1,
+            }">
+            {{ t('DASHBOARD.INVENTORY.PAGINATION.PREVIOUS') }}
+          </button>
+          <button (click)="changePage(1)" [disabled]="end >= allProduct().length"
+            class="flex-1 md:flex-none px-5 py-3 md:py-2.5 transition-all bg-slate-900 text-white rounded-xl shadow-lg shadow-slate-200"
+            [ngClass]="{ 'opacity-10 cursor-not-allowed shadow-none': end >= allProduct().length }">
+            {{ t('DASHBOARD.INVENTORY.PAGINATION.NEXT') }}
+          </button>
+        </div>
+      </div>
+    </section>
+
+    @if (popupitem()) {
+    <!-- Overlay : Nexus Blur -->
+    <div *transloco="let t"
+      class="fixed inset-0 z-[100] flex items-center justify-center bg-zinc-900/20 backdrop-blur-md p-6">
+      <!-- Modal Card : Studio Minimalist -->
+      <div
+        class="w-full max-w-lg transform overflow-hidden rounded-[3rem] bg-white p-12 text-left align-middle shadow-[0_35px_100px_-15px_rgba(0,0,0,0.2)] transition-all border border-zinc-100">
+        <!-- Icone : Version Brutaliste -->
+        <div
+          class="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-zinc-50 mb-8 border border-zinc-100">
+          <div
+            class="flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-sm border border-zinc-100 group">
+            <svg class="h-8 w-8 text-zinc-900" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Contenu Texte : Ultra-Contraste -->
+        <div class="text-center space-y-4">
+          <h3 class="text-2xl font-black uppercase tracking-tighter text-zinc-900 leading-tight">
+            {{ t('modal.delete_title') }}
+          </h3>
+          <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-zinc-400 max-w-[80%] mx-auto leading-relaxed">
+            {{ t('modal.delete_description') }}
+          </p>
+        </div>
+
+        <!-- Actions : Boutons Studio -->
+        <div class="mt-12 flex flex-col gap-4">
+          <!-- Action Principale : Noir Profond -->
+          <button (click)="deleteDocument()" type="button"
+            class="w-full inline-flex justify-center items-center rounded-full bg-zinc-900 px-8 py-5 text-xs font-black uppercase tracking-[0.3em] text-white shadow-xl hover:bg-black hover:scale-[1.02] active:scale-95 transition-all duration-300">
+            {{ t('modal.delete_button') }}
+          </button>
+
+          <!-- Action Secondaire : Minimaliste -->
+          <button (click)="popupitem.set(false)" type="button"
+            class="w-full inline-flex justify-center items-center rounded-full border-2 border-zinc-100 bg-white px-8 py-5 text-xs font-black uppercase tracking-[0.3em] text-zinc-900 hover:bg-zinc-50 transition-all duration-300">
+            {{ t('common.cancel') }}
+          </button>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>
+
+<!-- Button retour : Nexus Style -->
+<button *transloco="let t" [routerLink]="['/interaction']"
+  class="group fixed bottom-8 left-8 z-20 flex items-center gap-4 px-6 py-4 bg-white border border-zinc-100 rounded-[3rem] shadow-xl hover:shadow-2xl transition-all duration-500 active:scale-95">
+  <div
+    class="flex items-center justify-center w-10 h-10 bg-zinc-900 rounded-full transition-transform group-hover:-translate-x-1 duration-300">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24"
+      stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M15 19l-7-7 7-7" />
+    </svg>
+  </div>
+
+  <span class="text-xs font-black uppercase tracking-[0.3em] text-zinc-900">
+    {{ t('ACTIONS_2.BACK') }}
+  </span>
+</button>
+
+@if (authService.showToast()) {
+<div class="fixed bottom-8 right-8 z-50 animate-in fade-in slide-in-from-bottom duration-500">
+  <div class="flex items-center gap-6 bg-white border border-zinc-100 p-6 rounded-[2.5rem] shadow-2xl min-w-[350px]">
+    <div [ngClass]="{ 'bg-zinc-900': success(), 'bg-red-600': !success() }"
+      class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+      </svg>
+    </div>
+
+    <div class="flex flex-col">
+      <h3 class="text-sm font-black uppercase tracking-tight text-zinc-900">{{ marque() }}</h3>
+      <p class="text-xs font-medium text-zinc-500">{{ notification() }}</p>
+    </div>
+
+    <button (click)="authService.showToast.set(false)"
+      class="ml-auto p-2 hover:bg-zinc-50 rounded-full transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-zinc-400" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+</div>
+}
+
+<!-- champ popup : Architecture Nexus White -->
+@if (showPopup()) {
+<div *transloco="let t" class="fixed inset-0 z-[100] flex items-center justify-center p-6">
+  <!-- Backdrop : Zinc profond -->
+  <div (click)="showPopup.set(false)"
+    class="absolute inset-0 bg-zinc-900/40 backdrop-blur-md transition-opacity duration-500"></div>
+
+  <!-- Conteneur Principal : Minimalisme Radical -->
+  <div
+    class="relative bg-white w-full max-w-6xl h-[90vh] rounded-[3rem] border border-zinc-100 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.15)] overflow-hidden flex flex-col scale-in-center">
+    <!-- HEADER -->
+    <div class="relative flex items-center justify-between px-12 py-8 border-b border-zinc-50">
+      <div class="flex flex-col">
+        <h3 class="text-2xl font-black tracking-tighter text-zinc-900 uppercase">
+          {{ t('PREVIEW_2.TITLE') }}
+        </h3>
+        <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-[0.4em] mt-1">
+          {{ t('PREVIEW_2.SUBTITLE') }}
+        </p>
+      </div>
+
+      <!-- Bouton Fermer : Cercle Zinc -->
+      <button (click)="showPopup.set(false)" type="button"
+        class="group bg-zinc-900 p-4 rounded-full transition-all hover:scale-110 active:scale-90 shadow-xl">
+        <svg xmlns="http://www.w3.org/2000/svg"
+          class="w-6 h-6 text-white transition-transform duration-500 group-hover:rotate-180" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- ZONE IFRAME : Fond Zinc-50 pour le contraste -->
+    <div class="flex-grow bg-zinc-50 relative">
+      @if (pdfPreviewUrl()) {
+      <iframe [src]="pdfPreviewUrl()" width="100%" height="100%" class="border-none"> </iframe>
+      } @else {
+      <div class="flex flex-col items-center justify-center h-full gap-6">
+        <div class="w-16 h-16 border-[6px] border-zinc-200 border-t-zinc-900 rounded-full animate-spin"></div>
+        <p class="text-[10px] font-black tracking-[0.5em] text-zinc-900 uppercase">
+          Syncing Nexus...
+        </p>
+      </div>
+      }
+    </div>
+
+    <!-- FOOTER : Discret et élégant -->
+    <div class="flex items-center justify-center py-8 bg-white">
+      <div class="flex items-center gap-6">
+        <span class="w-8 h-[2px] bg-zinc-900"></span>
+        <p class="text-[9px] text-zinc-400 font-black uppercase tracking-[0.5em]">
+          {{ t('PREVIEW_2.FOOTER_INFO') }}
+        </p>
+        <span class="w-8 h-[2px] bg-zinc-900"></span>
+      </div>
+    </div>
+  </div>
+</div>
+}
+
+@if (popupitem()) {
+<!-- Overlay (Arrière-plan flou) -->
+<div *transloco="let t"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+  <!-- Modal Card -->
+  <div
+    class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-2xl transition-all border border-slate-100 scale-100">
+    <!-- Icone d'avertissement stylisée avec animation pulse -->
+    <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-red-50 mb-4">
+      <div class="flex h-14 w-14 items-center justify-center rounded-full bg-red-100 animate-pulse">
+        <svg class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Contenu Texte (Traduit) -->
+    <div class="text-center">
+      <h3 class="text-xl font-bold leading-6 text-slate-900">
+        {{ t('modal.delete_title') }}
+      </h3>
+      <p class="mt-3 text-sm text-slate-500">
+        {{ t('modal.delete_description') }}
+      </p>
+    </div>
+
+    <!-- Actions (Boutons Traduits) -->
+    <div class="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-center">
+      <button (click)="popupitem.set(false)" type="button"
+        class="inline-flex justify-center rounded-xl border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-500 transition-all duration-200">
+        {{ t('common.cancel') }}
+      </button>
+
+      <button (click)="deleteDocument()" type="button"
+        class="inline-flex justify-center rounded-xl bg-red-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-red-200 hover:bg-red-700 hover:shadow-red-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600 transition-all duration-200">
+        {{ t('modal.delete_button') }}
+      </button>
+    </div>
+  </div>
+</div>
+}
+
+@if (showDimension()) {
+<!-- POPUP RÉGLAGES : STYLE NEXUS STUDIO -->
+<div *transloco="let t"
+  class="fixed inset-0 z-[100] flex items-center justify-center p-6 animate-in fade-in duration-500">
+  <!-- Backdrop (Fond flou) -->
+  <div class="absolute inset-0 bg-zinc-900/10 backdrop-blur-md"></div>
+
+  <!-- Modal Card -->
+  <div
+    class="relative bg-zinc-50 border border-zinc-100 p-10 md:p-14 rounded-[3.5rem] w-full max-w-[420px] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] scale-in-center">
+    <!-- Bouton Fermer Discret -->
+    <button (click)="showDimension.set(false)"
+      class="absolute top-8 right-8 text-zinc-300 hover:text-zinc-900 transition-colors">
+      <svg xmlns="http://www.w3.org" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <h4 class="text-[10px] font-black tracking-[0.4em] text-zinc-900 mb-10 uppercase text-center">
+      {{ t('QR_DIMENSIONS_2.TITLE') }}
+    </h4>
+
+    <form [formGroup]="formDimension" class="space-y-8">
+      <!-- Grid Colonnes & Lignes -->
+      <div class="grid grid-cols-2 gap-6">
+        <div class="space-y-2">
+          <label class="block text-[9px] font-black tracking-widest text-zinc-400 uppercase ml-2">
+            {{ t('QR_DIMENSIONS_2.COLUMNS') }}
+          </label>
+          <input formControlName="column" type="number"
+            class="w-full px-6 py-5 bg-white border border-zinc-100 rounded-3xl font-bold text-zinc-900 focus:ring-2 focus:ring-zinc-900 outline-none transition-all shadow-sm" />
+        </div>
+        <div class="space-y-2">
+          <label class="block text-[9px] font-black tracking-widest text-zinc-400 uppercase ml-2">
+            {{ t('QR_DIMENSIONS_2.ROWS') }}
+          </label>
+          <input formControlName="rows" type="number"
+            class="w-full px-6 py-5 bg-white border border-zinc-100 rounded-3xl font-bold text-zinc-900 focus:ring-2 focus:ring-zinc-900 outline-none transition-all shadow-sm" />
+        </div>
+      </div>
+
+      <!-- Champ Pages -->
+      <div class="space-y-2">
+        <label class="block text-[9px] font-black tracking-widest text-zinc-400 uppercase ml-2">
+          {{ t('QR_DIMENSIONS_2.PAGES') }}
+        </label>
+        <input formControlName="pages" type="number"
+          class="w-full px-6 py-5 bg-white border border-zinc-100 rounded-3xl font-bold text-zinc-900 focus:ring-2 focus:ring-zinc-900 outline-none transition-all shadow-sm" />
+      </div>
+
+      <!-- Bouton de confirmation Nexus -->
+      <button [disabled]="formDimension.invalid" (click)="imprimerPDF()"
+        class="w-full mt-4 bg-zinc-900 text-white py-6 rounded-3xl text-[10px] font-black uppercase tracking-[0.3em] hover:bg-black hover:scale-[1.02] active:scale-95 transition-all shadow-xl">
+        Confirm Settings
+      </button>
+    </form>
+  </div>
+</div>
+}

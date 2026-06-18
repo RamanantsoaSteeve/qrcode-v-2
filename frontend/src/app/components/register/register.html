@@ -1,0 +1,186 @@
+<div *transloco="let t" class="min-h-screen bg-zinc-50 flex items-center justify-center p-4">
+  <!-- Card Principal -->
+  <div
+    class="bg-white border border-zinc-200 p-10 rounded-[2.5rem] shadow-xl shadow-zinc-200/50 w-full max-w-md transition-all">
+
+    <!-- Header -->
+    <div class="text-center mb-10">
+      <h1 class="text-3xl font-black text-zinc-900 tracking-tighter mb-2">{{ t('REGISTER.TITLE') }}</h1>
+      <p class="text-zinc-400 text-sm font-medium italic">{{ t('REGISTER.SUBTITLE') }}</p>
+    </div>
+
+    <form [formGroup]="formRegister" class="space-y-6">
+      <!-- Username -->
+      <div>
+        <label class="block text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-2 ml-1">{{
+          t('REGISTER.LABEL_USERNAME') }}</label>
+        <div class="relative">
+          <input formControlName="username" type="text" [placeholder]="t('REGISTER.PLACEHOLDER_USERNAME')"
+            class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-900 placeholder-zinc-300 outline-none focus:border-zinc-900 focus:bg-white transition-all" />
+        </div>
+        @if (formRegister.get('username')?.touched && formRegister.get('username')?.errors?.['minlength']){
+        <p class="mt-2 text-xs font-bold text-red-500 flex items-center px-1">
+          {{ t('REGISTER.ERRORS.USER_SHORT') }}
+        </p>
+        }
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label class="block text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-2 ml-1">{{
+          t('REGISTER.LABEL_EMAIL') }}</label>
+        <div class="relative">
+          <input type="email" formControlName="email" [placeholder]="t('REGISTER.PLACEHOLDER_EMAIL')"
+            class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-900 placeholder-zinc-300 outline-none focus:border-zinc-900 focus:bg-white transition-all" />
+        </div>
+        @if (formRegister.get('email')?.touched && formRegister.get('email')?.errors?.['email']){
+        <p class="mt-2 text-xs font-bold text-red-500 flex items-center px-1">
+          {{ t('REGISTER.ERRORS.EMAIL_INVALID') }}
+        </p>
+        }
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label class="block text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-2 ml-1">{{
+          t('REGISTER.LABEL_PASSWORD') }}</label>
+        <div class="relative">
+          <input type="password" formControlName="password" [placeholder]="t('REGISTER.PLACEHOLDER_PASSWORD')"
+            class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-900 placeholder-zinc-300 outline-none focus:border-zinc-900 focus:bg-white transition-all" />
+        </div>
+        @if (formRegister.get('password')?.touched && formRegister.get('password')?.errors?.['minlength']){
+        <p class="mt-2 text-[10px] font-bold text-red-500 uppercase">
+          {{ t('REGISTER.ERRORS.PASS_SHORT') }}
+        </p>
+        }
+        @if (formRegister.get('password')?.touched && formRegister.get('password')?.errors?.['pattern']){
+        <p class="mt-2 text-[10px] font-bold text-red-500 uppercase">
+          {{ t('REGISTER.ERRORS.PASS_WEAK') }}
+        </p>
+        }
+      </div>
+
+      <!-- Confirm Password -->
+      <div>
+        <label class="block text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-2 ml-1">{{
+          t('REGISTER.LABEL_CHECK_PASSWORD') }}</label>
+        <div class="relative">
+          <input type="password" formControlName="checkpassword" [placeholder]="t('REGISTER.PLACEHOLDER_PASSWORD')"
+            class="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-900 placeholder-zinc-300 outline-none focus:border-zinc-900 focus:bg-white transition-all" />
+        </div>
+        @if (formRegister.get('checkpassword')?.touched && formRegister.get('checkpassword')?.errors?.['mustMatch']){
+        <p class="mt-2 text-[10px] font-bold text-red-500 uppercase">
+          {{ t('REGISTER.ERRORS.PASS_MISMATCH') }}
+        </p>
+        }
+      </div>
+
+      <!-- Button -->
+      <button type="button" (click)="sendEmail()" [disabled]="formRegister.invalid || isLoading()"
+        [ngClass]="{'opacity-20 cursor-not-allowed': formRegister.invalid, 'hover:bg-zinc-800 shadow-lg shadow-zinc-200': !formRegister.invalid}"
+        class="w-full py-5 px-4 bg-zinc-900 text-white font-black text-xs uppercase tracking-[0.2em] rounded-2xl transition-all duration-200 mt-4">
+        {{ isLoading() ? '...' : t('REGISTER.BTN_REGISTER') }}
+      </button>
+    </form>
+
+    <!-- Footer -->
+    <p class="text-center text-zinc-400 text-xs font-bold mt-10">
+      {{ t('REGISTER.ALREADY_REGISTERED') }}
+      <a [routerLink]="['/login']"
+        class="text-zinc-900 font-black border-b-2 border-zinc-900 ml-1 hover:text-zinc-500 hover:border-zinc-500 transition-all">{{
+        t('REGISTER.LINK_LOGIN') }}</a>
+    </p>
+  </div>
+</div>
+
+
+@if (isRegister()) {
+<form *transloco="let t" [formGroup]="formCheck"
+  class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+
+  <div class="relative bg-white rounded-3xl shadow-2xl p-8 max-w-sm w-full border border-slate-100 overflow-hidden">
+
+    <div class="absolute -top-10 -right-10 w-32 h-32 bg-indigo-50 rounded-full -z-10"></div>
+
+    <div class="text-center mb-10">
+      <div
+        class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-tr from-indigo-600 to-purple-500 rounded-2xl shadow-lg shadow-indigo-200 rotate-3 mb-6">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+      </div>
+      <h2 class="text-3xl font-extrabold text-slate-800 tracking-tight">{{ t('VERIFICATION.TITLE') }}</h2>
+      <p class="text-slate-500 mt-2 text-sm font-medium">{{ t('VERIFICATION.SUBTITLE') }}</p>
+    </div>
+
+    <div class="flex justify-between gap-2 mb-10">
+      <input formControlName="value1" type="text" inputmode="numeric" maxlength="1" placeholder="•"
+        class="w-14 h-16 text-center text-2xl font-bold bg-slate-50 border-2 border-transparent rounded-2xl focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:scale-110 outline-none transition-all duration-300 placeholder-slate-300" />
+      <input formControlName="value2" type="text" inputmode="numeric" maxlength="1" placeholder="•"
+        class="w-14 h-16 text-center text-2xl font-bold bg-slate-50 border-2 border-transparent rounded-2xl focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:scale-110 outline-none transition-all duration-300 placeholder-slate-300" />
+      <input formControlName="value3" type="text" inputmode="numeric" maxlength="1" placeholder="•"
+        class="w-14 h-16 text-center text-2xl font-bold bg-slate-50 border-2 border-transparent rounded-2xl focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:scale-110 outline-none transition-all duration-300 placeholder-slate-300" />
+      <input formControlName="value4" type="text" inputmode="numeric" maxlength="1" placeholder="•"
+        class="w-14 h-16 text-center text-2xl font-bold bg-slate-50 border-2 border-transparent rounded-2xl focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:scale-110 outline-none transition-all duration-300 placeholder-slate-300" />
+    </div>
+
+    @if (formCheck.invalid && formCheck.touched) {
+    <div
+      class="mt-2 flex items-center gap-2 px-3 py-2 bg-red-50/50 border-l-4 border-red-500 rounded-r-lg animate-in fade-in slide-in-from-left-2 duration-300">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-red-500" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+      <span class="text-xs font-medium text-red-700 tracking-wide uppercase italic">
+        {{ t('VERIFICATION.ERRORS.DIGITS_ONLY') }}
+      </span>
+    </div>
+    }
+
+    <button [disabled]="formCheck.invalid" (click)="recoverCode()"
+      class="w-full group relative bg-slate-900 py-4 rounded-2xl overflow-hidden transition-all hover:bg-indigo-600 active:scale-95">
+      <span class="relative z-10 text-white font-bold tracking-wide uppercase text-sm">{{ t('VERIFICATION.BTN_CONFIRM')
+        }}</span>
+      <div
+        class="absolute inset-0 h-full w-full bg-gradient-to-r from-indigo-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+      </div>
+    </button>
+
+    <p class="text-center mt-8 text-xs font-semibold text-slate-400">
+      {{ t('VERIFICATION.FOOTER_TEXT') }}
+      <a href="#" class="text-indigo-600 hover:text-indigo-800 transition-colors ml-1">{{ t('VERIFICATION.RESEND')
+        }}</a>
+    </p>
+  </div>
+</form>
+}
+
+@if (authService.showToast()) {
+<div *transloco="let t" class="fixed bottom-5 left-5 z-50 animate-in fade-in slide-in-from-left duration-300">
+  <div
+    class="flex items-center gap-3 bg-white/80 backdrop-blur-md border border-slate-200 p-4 rounded-2xl shadow-2xl shadow-red-100/50 min-w-[300px]">
+
+    <div
+      class="flex-shrink-0 w-10 h-10 bg-red-600 rounded-xl flex items-center justify-center shadow-lg shadow-red-200">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </div>
+
+    <div>
+      <h3 class="text-sm font-bold text-slate-800">{{ t('TOAST.ERROR_TITLE') }}</h3>
+      <p class="text-xs text-slate-500">{{ t('TOAST.ERROR_MSG') }}</p>
+    </div>
+
+    <button (click)="authService.showToast.set(false)"
+      class="ml-auto text-slate-400 hover:text-slate-600 transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+</div>
+}
