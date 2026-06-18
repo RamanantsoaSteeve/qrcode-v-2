@@ -14,7 +14,7 @@ export class ProductService {
   private readonly API = `${config.url}/product`;
 
   getProduct(id: string): Observable<ProductResponse[]> {
-    return this.http.post<ProductResponse[]>(`${this.API}/get`, { id });
+    return this.http.post<ProductResponse[]>(`${this.API}/get`, Number(id));
   }
 
   createProduct(price: number, name: string, currency: string, userId: string): Observable<qrcodeResponse> {
@@ -23,16 +23,24 @@ export class ProductService {
 
   printProduct(price: number, name: string, username: string, currencySymbol: string, column: number, rows: number, pages: number) {
     return this.http.post(`${this.API}/print`,
-      { price, name, currencySymbol, column, rows, username, pages },
+      {
+        contentQrCodeDto: { price, name, currencySymbol },
+        column,
+        rows,
+        username,
+        pages
+      },
       { responseType: 'blob' });
   }
 
   generateProduct(price: number, name: string, username: string, currencySymbol: string): Observable<qrcodeResponse> {
     return this.http.post<qrcodeResponse>(`${this.API}/generate-qrcode`, {
-      price,
-      name,
+      contentQrCodeDto: {
+        price,
+        name,
+        currencySymbol,
+      },
       username,
-      currencySymbol,
     });
   }
   removeProduct(id: number): Observable<AuthResponsePassword> {

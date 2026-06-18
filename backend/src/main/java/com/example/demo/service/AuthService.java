@@ -1,15 +1,12 @@
 package com.example.demo.service;
 
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,7 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.AuthDto;
 import com.example.demo.dto.AuthDto.UserLogin;
-import com.example.demo.exception.LocalExceptionHandler;
+import com.example.demo.exception.BadRequestException;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.mapper.AuthMapper;
 import com.example.demo.model.AuthModel;
 import com.example.demo.repository.AuthRepository;
@@ -30,18 +28,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional
 public class AuthService {
-    HashMap<String, Number> codes = new HashMap<>();
-
+    private final StringRedisTemplate redisTemplate;
     private final AuthRepository authRepository;
     private final AuthMapper authMapper;
     private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
     private final JavaMailSender mailSender;
 
     public Long registerUser(AuthDto.RegisterRequest dto) {
         if (authRepository.existsByEmail(dto.email())) {
-            throw new LocalExceptionHandler("Email already exists");
+            throw new BadRequestException("Email already exists");
         }
 
         AuthModel entity = authMapper.toEntity(dto);
@@ -53,29 +49,31 @@ public class AuthService {
 
     public String getToken(AuthDto.LoginRequest dto) {
         try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(dto.email(), dto.password()));
-
-            return tokenService.generateToken(authentication);
+            return tokenService.loginWithEmailAndPassword(dto);
         } catch (AuthenticationException e) {
-            throw new LocalExceptionHandler("Invalid email or password");
+            throw new BadRequestException("Invalid email or password");
         }
     }
 
-    public UserLogin GetUsetInfo(String email) {
+    public UserLogin getUserInfo(String email) {
         AuthModel authModel = authRepository.findByEmail(email)
-                .orElseThrow(() -> new LocalExceptionHandler("Invalid email or password"));
+                .orElseThrow(() -> new ResourceNotFoundException("Invalid email or password"));
 
         return authMapper.toDto(authModel);
     }
 
+    public AuthModel getUserAllInfo(String email) {
+        return authRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Invalid email or password"));
+    }
+
     public Long getIdByEmail(AuthDto.RequestEmail dto) {
         AuthModel authModel = authRepository.findByEmail(dto.email())
-                .orElseThrow(() -> new LocalExceptionHandler("email introuvable"));
+                .orElseThrow(() -> new ResourceNotFoundException("Email introuvable"));
+
         return authModel.getId();
     }
 
-    @Async
     public void sendHtmlEmail(String to, String subject, String htmlContent) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
@@ -90,17 +88,16 @@ public class AuthService {
             mailSender.send(message);
 
         } catch (MessagingException e) {
-            throw new IllegalStateException("Échec de l'envoi de l'e-mail à " + to, e);
+            throw new BadRequestException("Échec de l'envoi de l'e-mail à " + to + " (Erreur technique)");
         }
     }
 
     public String generatHtml(Number code, String username, String to) {
-        if (codes.containsKey(to)) {
-            codes.remove(to);
-        }
+        System.out.println("Arrive ici          " + to);
+        redisTemplate.opsForValue().set(to, String.valueOf(code), 5, TimeUnit.MINUTES);
+        System.out.println("Voila     " + redisTemplate.opsForValue().get(to));
 
-        codes.put(to, code);
-        String htmlContent = """
+        return """
                 <!DOCTYPE html>
                 <html>
                 <head>
@@ -123,15 +120,20 @@ public class AuthService {
                 </html>
                 """
                 .formatted(username, code);
-
-        return htmlContent;
     }
 
     public void checkCode(Number code, String email) {
-        if (!code.equals(codes.get(email))) {
-            throw new LocalExceptionHandler("code invalid");
-
+        String savedCode = redisTemplate.opsForValue().get(email);
+        System.out.println(savedCode);
+        if (savedCode == null) {
+            throw new BadRequestException("Le code a expiré ou n'existe pas");
         }
+
+        if (!savedCode.equals(String.valueOf(code))) {
+            throw new BadRequestException("Code invalide");
+        }
+
+        redisTemplate.delete(email);
     }
 
     public Number generateCode() {

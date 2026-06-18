@@ -9,21 +9,18 @@ import com.example.demo.dto.AuthDto.ResponseCodeDto;
 import com.example.demo.dto.AuthDto.ResponseIdRegister;
 import com.example.demo.dto.AuthDto.ResponseRequestLogin;
 import com.example.demo.dto.AuthDto.ResponseRequestRegister;
-import com.example.demo.dto.AuthDto.UserLogin;
 import com.example.demo.service.AuthService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
     private final TokenService tokenService;
     private final AuthService authService;
@@ -41,7 +38,7 @@ public class AuthController {
         return ResponseEntity.ok(AuthDto.ResponseRequestLogin.builder()
                 .success(true)
                 .token(authService.getToken(dto))
-                .user(authService.GetUsetInfo(dto.email()))
+                .user(authService.getUserInfo(dto.email()))
                 .build());
     }
 
@@ -61,15 +58,15 @@ public class AuthController {
         return ResponseEntity.ok("email send with success");
     }
 
-    @PostMapping("/send-code")
+    @PostMapping("/get-code")
     public ResponseEntity<ResponseCodeDto> getAndCheckCode(@RequestBody @Valid AuthDto.RequestCodeDto dto) {
         authService.checkCode(dto.code(), dto.email());
-        UserLogin userLogin = authService.GetUsetInfo(dto.email());
 
         return ResponseEntity.ok(AuthDto.ResponseCodeDto.builder()
-                .token(tokenService.getToken(userLogin))
+                .token(tokenService.generateToken(authService.getUserAllInfo(dto.email())))
                 .success(true)
                 .message("code valid")
                 .build());
     }
+
 }

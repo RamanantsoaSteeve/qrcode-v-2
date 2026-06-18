@@ -75,10 +75,21 @@ export class Register {
     this.destroy$.complete();
   }
 
-  register() {
-
+  sendEmail() {
     const formRegisterRaw = this.formRegister.getRawValue();
     this.isLoading.set(true);
+
+    this.authService
+      .sendEmail('', formRegisterRaw.email!, 'Verifier votre email')
+      .subscribe({
+        error: ({ error }) => {
+          console.log(error.message);
+        }
+      });
+  }
+
+  register() {
+    const formRegisterRaw = this.formRegister.getRawValue();
 
     this.authService
       .createUser(formRegisterRaw.username!, formRegisterRaw.email!, formRegisterRaw.password!)
@@ -87,17 +98,8 @@ export class Register {
         console.log(response1, 'User registred successfully');
         this.isRegister.set(true);
         this.id.set(response1.id);
-
-
-        this.authService
-          .sendEmail('', formRegisterRaw.email!, 'Verifier votre email')
-          .subscribe({
-            error: ({ error }) => {
-              console.log(error.message);
-            }
-          });
       });
-  }
+  };
 
   recoverCode() {
     const rawValuCeckCode = this.formCheck.getRawValue();
@@ -107,6 +109,7 @@ export class Register {
       .subscribe({
         next: (response) => {
           if (response.success) {
+            this.register();
             localStorage.setItem('id', String(this.id()));
             localStorage.setItem('user', this.formRegister.value.username!);
             this.authService.showToast.set(true);

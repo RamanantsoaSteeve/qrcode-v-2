@@ -76,7 +76,7 @@
       </div>
 
       <!-- Button -->
-      <button type="button" (click)="register()" [disabled]="formRegister.invalid || isLoading()"
+      <button type="button" (click)="sendEmail()" [disabled]="formRegister.invalid || isLoading()"
         [ngClass]="{'opacity-20 cursor-not-allowed': formRegister.invalid, 'hover:bg-zinc-800 shadow-lg shadow-zinc-200': !formRegister.invalid}"
         class="w-full py-5 px-4 bg-zinc-900 text-white font-black text-xs uppercase tracking-[0.2em] rounded-2xl transition-all duration-200 mt-4">
         {{ isLoading() ? '...' : t('REGISTER.BTN_REGISTER') }}

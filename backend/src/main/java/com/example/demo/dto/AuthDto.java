@@ -19,6 +19,10 @@ public class AuthDto {
         public record RequestEmail(String email) {
         }
 
+        @Builder
+        public record ResponseLoginFirebase(Boolean success, String token, Long id, String username) {
+        }
+
         public record LoginRequest(
                         @Email(message = "Invalid email") @NotBlank(message = "champ is empty") String email,
                         @NotBlank(message = "Password is Blank") @Size(min = 6, message = "Password is too short") String password) {

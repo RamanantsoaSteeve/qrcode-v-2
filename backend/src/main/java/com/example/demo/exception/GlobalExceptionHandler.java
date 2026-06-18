@@ -1,6 +1,8 @@
 package com.example.demo.exception;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -8,30 +10,49 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+
+    // 1. Erreurs de validation (ex: champs manquants dans les @Valid DTO)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidatonExceptions(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-
+    public ResponseEntity<Map<String, Object>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, String> fieldErrors = new HashMap<>();
         ex.getBindingResult().getFieldErrors()
-                .forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
+                .forEach(error -> fieldErrors.put(error.getField(), error.getDefaultMessage()));
 
-        return errors;
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.BAD_REQUEST.value());
+        body.put("error", "Validation Failed");
+        body.put("errors", fieldErrors); // Contient la liste des champs invalides
+
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
+    // 2. Erreur de format JSON (ex: une virgule manquante, une chaîne à la place
+    // d'un entier)
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<String> handleJsonError(HttpMessageNotReadableException ex) {
-        return ResponseEntity.badRequest().body("Le format de ta requete JSON est invalide");
+    public ResponseEntity<Map<String, Object>> handleJsonError(HttpMessageNotReadableException ex) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.BAD_REQUEST.value());
+        body.put("error", "Bad Request");
+        body.put("message", "Le format de la requête JSON est invalide ou illisible");
+
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(LocalExceptionHandler.class)
-    public ResponseEntity<String> handleJsonErrorSend(LocalExceptionHandler ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-    }
+    // 3. Ton exception personnalisée (ex: Ressource introuvable)
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleResourceNotFound(ResourceNotFoundException ex) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.NOT_FOUND.value());
+        body.put("error", "Not Found");
+        body.put("message", ex.getMessage()); // Ton message personnalisé passé au throw new...
 
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
 }

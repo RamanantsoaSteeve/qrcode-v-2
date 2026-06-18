@@ -59,7 +59,6 @@ export class Login {
       });
   }
 
-
   async googleSignIn() {
     try {
       this.isClick.set(true);

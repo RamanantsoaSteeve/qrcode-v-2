@@ -19,7 +19,7 @@ export const routes: Routes = [
   },
   {
     path: 'reset-password',
-    loadComponent: () => import('./components/resetpassword/reset/reset').then((m) => m.ResetComponent),
+    loadComponent: () => import('./components/resetpassword/reset').then((m) => m.ResetComponent),
     canActivate: [tokenGuardGuard],
   },
   {

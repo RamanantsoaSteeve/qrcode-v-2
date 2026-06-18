@@ -15,25 +15,22 @@ import java.util.List;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
-@RequestMapping("/api/product")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api/product")
 public class ProductController {
     private final ProductService productService;
 
-    @PostMapping("/get-product")
+    @PostMapping("/get")
     public ResponseEntity<List<ProductDto.ProductResponse>> getProduct(@RequestBody Long id) {
         return ResponseEntity.ok(productService.getProductModels(id));
     }
 
-    @PostMapping("/create-product")
-    public ResponseEntity<ProductDto.QrcodeResponse> postMethodName(@RequestBody @Valid ProductDto.ProductInfoDto dto)
-            throws Exception {
+    @PostMapping("/create")
+    public ResponseEntity<ProductDto.QrcodeResponse> postMethodName(@RequestBody @Valid ProductDto.ProductInfoDto dto) {
         ProductDto.ContentQrCodeDto cQrCodeDto = ProductDto.ContentQrCodeDto.builder()
                 .price(dto.price())
                 .name(dto.name())

@@ -15,5 +15,5 @@ const host = 'http://localhost:8080';
 
 export const config = {
   host,
-  url: `${host}/api/v1`
+  url: `${host}/api`
 };

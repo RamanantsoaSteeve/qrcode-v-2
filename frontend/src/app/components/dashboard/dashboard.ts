@@ -59,9 +59,9 @@ export class DashboardComponent implements OnInit {
     this.showDimension.set(true);
   }
 
-
   filteredProducts = computed(() => {
     const query = this.nameProduct().toLowerCase();
+
     return this.allProduct().filter(item =>
       item.name.toLowerCase().includes(query)
     );
@@ -98,19 +98,19 @@ export class DashboardComponent implements OnInit {
   deleteDocument() {
     this.productService.removeProduct(this.idProduct()).subscribe((response) => {
       this.notification.set(response.message);
-
       if (response.success) {
         this.allProduct.update(products => products.filter(p => p.id !== this.idProduct()));
         this.success.set(true);
         this.popupitem.set(false);
         this.marque.set('Succès !');
       }
+
       if (!response.success) {
         this.success.set(false);
         this.marque.set('Erro save !');
       }
-      this.authService.showToast.set(true);
 
+      this.authService.showToast.set(true);
       timer(5000)
         .pipe(takeUntil(this.destroy$))
         .subscribe(() => {

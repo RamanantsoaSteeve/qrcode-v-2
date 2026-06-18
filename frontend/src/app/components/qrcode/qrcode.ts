@@ -6,7 +6,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ProductService } from '../../services/product';
 import { RouterLink } from "@angular/router";
 import { AuthService } from '../../services/auth';
-import { Subject, takeUntil, timer } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-qrcode',
@@ -52,6 +52,7 @@ export class Qrcode {
     this.productService.generateProduct(productRaw.price!, productRaw.name!, localStorage.getItem('user') ?? '', this.currency()).subscribe({
       next: (response) => {
         this.qrcode.set(response.qrcode);
+        console.log(this.qrcode());
       }
     });
   }
@@ -71,16 +72,11 @@ export class Qrcode {
 
   onSave() {
     const userId = localStorage.getItem('id');
-    this.printProduct();
     if (userId) {
       this.productService.createProduct(this.formProduct.value.price!, this.formProduct.value.name!, this.currency(), userId).subscribe({
         next: (response) => {
           this.isSave.set(true);
-          timer(5000)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(() => {
-              this.isSave.set(false);
-            });
+          this.generate();
         },
         error: ({ error }) => {
           alert(`⚠️ Vous avez déjà un produit nommé "${this.formProduct.getRawValue().name}". Veuillez utiliser un nom différent.`);

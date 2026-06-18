@@ -14,7 +14,7 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
 
-  private readonly API = `${config.url}/user`;
+  private readonly API = `${config.url}/auth`;
   public showToast = signal<boolean>(false);
 
   get token(): string | null {
