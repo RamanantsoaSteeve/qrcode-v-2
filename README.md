@@ -1,109 +1,68 @@
-2. Lancer l'intégralité de l'application (Full Stack)
-Cette commande démarre automatiquement la base de données PostgreSQL, le backend Spring Boot et le frontend Angular. Tout le projet communique parfaitement et fonctionne immédiatement.
-
-Bash
-docker-compose up --build
-Frontend Angular : Disponible sur http://localhost:4200
-
-Backend Spring Boot : Disponible sur http://localhost:8080
-
-3. Lancer uniquement le Backend et la Base de Données (Mode API)
-Si tu souhaites travailler sur le code de ton Frontend Angular en local tout en exécutant uniquement l'API et la base de données PostgreSQL dans Docker, utilise la commande suivante :
-
-Bash
-docker-compose up api
-⚙️ Configuration Requise
-Avant de lancer l'application, veille à bien configurer tes accès et variables d'environnement :
-
-Côté Backend (backend/src/main/resources/application.properties) :
-Properties
-# Configuration de la Base de données PostgreSQL
-spring.datasource.url=jdbc:postgresql://db:5432/votre_db
-spring.datasource.username=postgres
-spring.datasource.password=votre_mot_de_passe
-
-# Configuration SMTP pour l'envoi des codes OTP par Email
-spring.mail.host=smtp.gmail.com
-spring.mail.port=587
-spring.mail.username=votre-email@gmail.com
-spring.mail.password=votre-mot-de-passe-application-google
-
-# Propriété JWT
-jwt.secret=VotreCleSecreteTresLongueEtSecuriseePourLeTokenJWT
-Côté Frontend (frontend/src/environments/environment.ts) :
-Ajoute ta configuration du SDK Firebase pour faire fonctionner le Google Login :
-
-TypeScript
-export const environment = {
-  production: false,
-  firebaseConfig: {
-    apiKey: "VOTRE_API_KEY",
-    authDomain: "VOTRE_AUTH_DOMAIN",
-    projectId: "VOTRE_PROJECT_ID",
-    storageBucket: "VOTRE_STORAGE_BUCKET",
-    messagingSenderId: "VOTRE_MESSAGING_SENDER_ID",
-    appId: "VOTRE_APP_ID"
-  }
-};
-
-
-
 # 📦 QR Product Manager & Advanced Authentication System
 
-Une application Full-Stack moderne permettant de gérer des produits, de générer dynamiquement des QR Codes et de sécuriser l'accès via une authentification double niveau (Firebase Google Sign-In + Validation par code OTP Email + JWT).
+<p align="center">
+  <img src="[https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)" alt="Spring Boot" />
+  <img src="[https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)" alt="Angular" />
+  <img src="[https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)" alt="PostgreSQL" />
+  <img src="[https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)" alt="Docker" />
+  <img src="[https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)" alt="Firebase" />
+  <img src="[https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=F50057](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=F50057)" alt="JWT" />
+</p>
 
-L'application est entièrement internationalisée et propose une interface dynamique et responsive.
+Une application **Full-Stack conteneurisée** robuste permettant de gérer un stock de produits, de générer dynamiquement des **QR Codes** uniques et de sécuriser l'accès via un workflow d'authentification double niveau (Firebase Google Sign-In + Validation par code OTP Email + Token JWT).
+
+L'application intègre une gestion **multilingue complète** et propose une interface dynamique, interactive et hautement réactive (In/Out utilisateur en temps réel).
 
 ---
 
-## 📸 Aperçu & Captures d'écran
+## 📸 Aperçu de l'Application
 
-### 🖥️ Application en Production
-| Page de Connexion & OTP | Tableau de Bord & Gestion QR |
+### 🖥️ Production & Démo visuelle
+| 🔐 Connexion, Google Auth & Code OTP | 🛒 Gestion des Produits & QR Codes |
 | :---: | :---: |
-| <img src="https://via.placeholder.com/400x250?text=Login+%26+Firebase+Google+Auth" width="400" alt="Login & OTP"/> | <img src="https://via.placeholder.com/400x250?text=Product+Management+%26+QR+Code" width="400" alt="Dashboard"/> |
+| <img src="[https://via.placeholder.com/420x260?text=Login,+Firebase+%26+Email+Verification](https://via.placeholder.com/420x260?text=Login,+Firebase+%26+Email+Verification)" width="420" alt="Login & OTP Workflow"/> | <img src="[https://via.placeholder.com/420x260?text=Tableau+de+Bord,+Tri+%26+Generation+QR](https://via.placeholder.com/420x260?text=Tableau+de+Bord,+Tri+%26+Generation+QR)" width="420" alt="Product Dashboard"/> |
 
-> *Vous pouvez également glisser-déposer une courte vidéo démo (.mp4 ou .gif) directement dans cette section sur GitHub.*
+> 💡 **Astuce de présentation :** Remplace ces images par des captures d'écran réelles ou glisse-dépose directement un fichier `.mp4` ou un `.gif` animé dans cette section sur l'éditeur de GitHub pour afficher une démo vidéo en direct !
 
 ---
 
-## 🚀 Fonctionnalités
+## 🚀 Fonctionnalités Clés
 
-### 🔐 1. Authentification Robuste & Gestion de Session
-* **Inscription & Connexion Locale :** Formulaire standard sécurisé par cryptage des mots de passe.
-* **Connexion Sociale :** Authentification via Google intégrée de manière transparente avec **Firebase Auth**.
-* **Vérification Double Facteur par Email (OTP) :** Envoi automatique d'un code secret par email lors de la connexion. L'accès à l'application reste bloqué tant que le code exact n'est pas fourni.
-* **Sécurisation par Token JWT :** Une fois le code vérifié, l'API fournit un token JWT pour sécuriser toutes les requêtes suivantes.
-* **Session Interactive :** Gestion fluide des flux d'entrée et de sortie de l'utilisateur (Connexion/Déconnexion en temps réel).
+### 🔐 1. Authentification Avancée & Session Interactive
+* **Inscription & Connexion Locale :** Formulaire standard sécurisé avec hachage des mots de passe.
+* **Connexion Sociale (Social Login) :** Authentification rapide via Google propulsée par le SDK **Firebase Auth**.
+* **Vérification Double Facteur par Email (Code OTP) :** Envoi automatique d'un code secret à l'adresse e-mail de l'utilisateur. L'accès reste restreint tant que le code n'est pas validé.
+* **Sécurisation par Token JWT :** Une fois le code vérifié, l'API backend génère un token JWT utilisé pour autoriser de manière sécurisée toutes les requêtes utilisateur.
+* **Session Interactive :** Cyber de vie fluide de connexion et déconnexion, bloquant ou autorisant l'accès instantanément.
 
-### 🛒 2. Gestion Dynamique des Produits & QR Codes
-* **CRUD Complet :** Stockage, modification et suppression des produits en base de données.
-* **Génération de QR Code unique :** Création automatique d'un code QR incluant les détails du produit (Nom, Prix, ID) directement depuis l'application.
-* **Outils Avancés de Tableaux :** Tri des produits (par nom, prix), filtrage dynamique et suppression rapide.
+### 🛒 2. Gestion et Manipulation des Produits
+* **Stockage Complet (CRUD) :** Enregistrement complet des produits en base de données avec leur **Nom** et leur **Prix**.
+* **Génération Dynamique de QR Code :** Génération instantanée d'un QR code unique propre à chaque produit directement sur l'application.
+* **Manipulation Interactive du Tableau :** Fonctionnalités intégrées pour **trier**, **filtrer**, et **effacer** les produits à la volée.
 
-### 🌐 3. Support Multilingue (Internationalisation)
-Intégration de **Transloco** côté Frontend permettant de basculer instantanément entre trois langues :
+### 🌐 3. Support Multilingue Natif (i18n)
+Grâce à l'intégration de **Transloco** côté Frontend, l'utilisateur peut changer instantanément la langue de toute l'application sans recharger la page :
 * 🇫🇷 **Français**
 * 🇲🇬 **Malagasy**
-* 🇬🇧 **English**
+* 🇬🇧 **Anglais**
 
 ---
 
 ## 🛠️ Stack Technique
 
 * **Backend :** Java / Spring Boot, Spring Security, JWT, Java Stream API
-* **Frontend :** Angular, Transloco (i18n), TailwindCSS / Bootstrap (Interface interactive)
+* **Frontend :** Angular, Transloco (i18n), TailwindCSS / Bootstrap
 * **Base de données :** PostgreSQL
-* **Services Tiers :** Firebase Auth (Google Sign-In), Java Mail Sender (OTP Email)
-* **Conteneurisation :** Docker / Docker Compose
+* **Services Cloud / Tiers :** Firebase Auth (Google Sign-In), Java Mail Sender (OTP)
+* **Conteneurisation & DevOps :** Docker / Docker Compose
 
 ---
 
-## 📦 Déploiement rapide avec Docker
+## 🐳 Déploiement Rapide avec Docker
 
-Le projet est entièrement conteneurisé. Assurez-vous d'avoir Docker et Docker Compose installés sur votre machine.
+Le projet intègre une configuration Docker automatisée via `docker-compose.yml`. Tout est orchestré pour fonctionner immédiatement en une seule commande.
 
-### 1. Cloner le projet
+### 1️⃣ Cloner le projet
 ```bash
-git clone [https://github.com/votre-utilisateur/votre-repo.git](https://github.com/votre-utilisateur/votre-repo.git)
+git clone https://github.com/votre-utilisateur/votre-repo.git
 cd votre-repo
