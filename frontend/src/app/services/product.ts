@@ -14,7 +14,7 @@ export class ProductService {
   private readonly API = `${config.url}/product`;
 
   getProduct(id: string): Observable<ProductResponse[]> {
-    return this.http.post<ProductResponse[]>(`${this.API}/get`, Number(id));
+    return this.http.post<ProductResponse[]>(`${this.API}/get`, { id: Number(id) });
   }
 
   createProduct(price: number, name: string, currency: string, userId: string): Observable<qrcodeResponse> {
@@ -43,11 +43,11 @@ export class ProductService {
       username,
     });
   }
-  removeProduct(id: number): Observable<AuthResponsePassword> {
-    return this.http.delete<AuthResponsePassword>(`${this.API}/${id}`);
+  removeProduct(idProduct: number, idUser: number): Observable<AuthResponsePassword> {
+    return this.http.post<AuthResponsePassword>(`${this.API}/remove`, { idProduct, idUser });
   }
 
   getOneProductById(id: number): Observable<ProductResponse> {
-    return this.http.get<ProductResponse>(`${this.API}/get-product/${id}`);
+    return this.http.post<ProductResponse>(`${this.API}/get-one-product`, { id });
   }
 }

@@ -67,8 +67,8 @@ public class AuthService {
                 .orElseThrow(() -> new ResourceNotFoundException("Invalid email or password"));
     }
 
-    public Long getIdByEmail(AuthDto.RequestEmail dto) {
-        AuthModel authModel = authRepository.findByEmail(dto.email())
+    public Long getIdByEmail(String email) {
+        AuthModel authModel = authRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("Email introuvable"));
 
         return authModel.getId();
@@ -93,9 +93,10 @@ public class AuthService {
     }
 
     public String generatHtml(Number code, String username, String to) {
-        System.out.println("Arrive ici          " + to);
         redisTemplate.opsForValue().set(to, String.valueOf(code), 5, TimeUnit.MINUTES);
         System.out.println("Voila     " + redisTemplate.opsForValue().get(to));
+
+        System.out.println(code);
 
         return """
                 <!DOCTYPE html>
@@ -124,7 +125,6 @@ public class AuthService {
 
     public void checkCode(Number code, String email) {
         String savedCode = redisTemplate.opsForValue().get(email);
-        System.out.println(savedCode);
         if (savedCode == null) {
             throw new BadRequestException("Le code a expiré ou n'existe pas");
         }
@@ -138,5 +138,10 @@ public class AuthService {
 
     public Number generateCode() {
         return Integer.valueOf(String.format("%04d", ThreadLocalRandom.current().nextInt(10000)));
+    }
+
+    public void changePassword(AuthDto.ChangePasswordRequest dto) {
+        AuthModel authModel = authRepository.findById(dto.id()).orElseThrow();
+        authModel.setPassword(passwordEncoder.encode(dto.password()));
     }
 }

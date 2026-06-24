@@ -138,4 +138,12 @@ public class ProductService {
         return productRepository.findIdByName(name).orElseThrow(
                 () -> new ResourceNotFoundException("Aucun produit trouvé avec le nom : " + name));
     }
+
+    public void deleteProductById(Long id) {
+        if (!productRepository.existsById(id)) {
+            throw new BadRequestException("Product not exists");
+        }
+
+        productRepository.deleteById(id);
+    }
 }
