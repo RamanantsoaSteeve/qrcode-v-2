@@ -2,8 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthResponse, AuthResponseLogin, AuthResponseLoginFireBase, AuthResponsePassword, AuthResponseRegister, AuthResponseToken } from '../models/response';
-
+import { AuthResponse, AuthResponseLogin, AuthResponseLoginFireBase, AuthResponsePassword, AuthResponseRegister, AuthResponseToken, ResponseToken } from '../models/response';
 import { config } from '../../environments/environment';
 
 @Injectable({
@@ -21,12 +20,6 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  createUser(username: string, email: string, password: string): Observable<AuthResponseRegister> {
-    return this.http.post<AuthResponseRegister>(
-      `${this.API}/register`,
-      { username, email, password }
-    );
-  }
 
   login(email: string, password: string): Observable<AuthResponseLogin> {
     return this.http.post<AuthResponseLogin>(`${this.API}/login`, { email, password });
@@ -69,12 +62,12 @@ export class AuthService {
     return this.http.post<AuthResponseToken>(`${this.API}/send-email`, { text, to, subject });
   }
 
-  sendCode(email: string, code: number, id: number): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.API}/send-code`, { email, code, id });
+  sendCode(username: string, email: string, password: string, code: number): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.API}/get-code`, { registerRequest: { username, email, password }, code });
   }
 
-  sendCodeForgot(email: string, code: number, id: number): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.API}/send-code-forgot`, { email, code, id });
+  sendCodeForgot(code: number, email: string): Observable<ResponseToken> {
+    return this.http.post<ResponseToken>(`${this.API}/get-code-forgot`, { code, email });
   }
 
   sendPassword(id: string, password: string): Observable<AuthResponsePassword> {

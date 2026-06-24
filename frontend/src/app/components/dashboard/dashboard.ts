@@ -96,7 +96,7 @@ export class DashboardComponent implements OnInit {
 
 
   deleteDocument() {
-    this.productService.removeProduct(this.idProduct()).subscribe((response) => {
+    this.productService.removeProduct(this.idProduct(), Number(localStorage.getItem("id"))).subscribe((response) => {
       this.notification.set(response.message);
       if (response.success) {
         this.allProduct.update(products => products.filter(p => p.id !== this.idProduct()));

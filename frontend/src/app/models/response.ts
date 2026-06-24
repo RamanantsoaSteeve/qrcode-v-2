@@ -17,6 +17,10 @@ export interface AuthResponseToken {
   message: string;
 }
 
+export interface ResponseToken {
+  token: string;
+}
+
 export interface AuthResponse {
   message: string;
   success: boolean;
