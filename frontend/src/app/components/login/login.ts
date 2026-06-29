@@ -26,7 +26,6 @@ export class Login {
   readonly foundNamemail = signal<boolean>(false);
   public readonly isClick = signal(false);
 
-
   user$ = user(this.auth);
   isLoading = signal<boolean>(false);
 

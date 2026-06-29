@@ -47,8 +47,7 @@ public class ProductService {
         list.add(productMapper.toEntity(dto));
         authRepository.save(authModel);
 
-        return productRepository.findIdByName(dto.name()).orElseThrow(
-                () -> new ResourceNotFoundException("Le produit n'a pas pu être enregistré correctement"));
+        return authModel.getProductModels().stream().filter(product -> product.getName().equals(dto.name())).count();
     }
 
     public String createContentQrcode(ProductDto.ContentQrCodeDto request) {

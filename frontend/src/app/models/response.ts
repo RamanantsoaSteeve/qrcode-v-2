@@ -22,7 +22,7 @@ export interface ResponseToken {
 }
 
 export interface AuthResponse {
-  message: string;
+  id: number;
   success: boolean;
   token: string;
 }

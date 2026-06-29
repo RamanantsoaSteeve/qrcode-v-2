@@ -72,7 +72,6 @@ public class ProductController {
     public ResponseEntity<QrcodeResponse> generateQrcode(@RequestBody @Valid ProductDto.GenerateQrcodeRequest dto)
             throws Exception {
         return ResponseEntity.ok(ProductDto.QrcodeResponse.builder()
-                .id(productService.getIdProductByName(dto.contentQrCodeDto().name()))
                 .qrcode(productService.generateQrCodeBlob(productService.createContentQrcode(dto.contentQrCodeDto())))
                 .build());
     }

@@ -58,6 +58,7 @@ export class Qrcode {
   }
 
   printProduct() {
+    this.isSave.set(false);
     this.showPopup.set(true);
     const productRaw = this.formProduct.getRawValue();
     const dimensionRaw = this.formDimension.getRawValue();
