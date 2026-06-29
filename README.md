@@ -1,3 +1,7 @@
+[Uploading Capture vidéo du 2026-06-29 08-19-06.webm…]()
+<img width="1366" height="768" alt="Capture d’écran du 2026-06-26 10-14-36" src="https://github.com/user-attachments/assets/a111d924-a839-42ff-91fc-7059b29819ad" />
+<img width="1366" height="768" alt="Capture d’écran du 2026-06-26 10-14-42" src="https://github.com/user-attachments/assets/9a1a0300-8788-40b7-91e2-36a3c01f434a" />
+<img width="1366" height="768" alt="Capture d’écran du 2026-06-26 10-14-49" src="https://github.com/user-attachments/assets/ea57112a-98b1-421b-a787-07b5b8370f3a" />
 # 📦 QR Product Manager & Advanced Authentication System
 
 <p align="center">
