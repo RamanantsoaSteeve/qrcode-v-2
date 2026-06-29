@@ -44,7 +44,6 @@ export class Register {
   private fb = inject(FormBuilder);
   public isLoading = signal<boolean>(false);
   public isRegister = signal<boolean>(false);
-  private id = signal(0);
   private destroy$ = new Subject<void>();
 
   readonly formCheck = this.fb.group({
@@ -100,7 +99,7 @@ export class Register {
       .subscribe({
         next: (response) => {
           if (response.success) {
-            localStorage.setItem('id', String(this.id()));
+            localStorage.setItem('id', String(response.id));
             localStorage.setItem('user', this.formRegister.value.username!);
             this.authService.showToast.set(true);
             timer(10000)

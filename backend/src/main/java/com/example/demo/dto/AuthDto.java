@@ -39,7 +39,7 @@ public class AuthDto {
         }
 
         @Builder
-        public record ResponseCodeDto(String message, Boolean success, String token, Long id) {
+        public record ResponseCodeDto(Boolean success, String token, Long id) {
         }
 
         public record LoginRequest(

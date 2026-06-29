@@ -66,7 +66,6 @@ public class AuthController {
                 .token(tokenService.generateToken(authService.getUserAllInfo(dto.registerRequest().email())))
                 .success(true)
                 .id(id)
-                .message("code valid")
                 .build());
     }
 

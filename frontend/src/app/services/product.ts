@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ProductResponse, ProductState, qrcodeResponse } from '../models/product';
+import { ProductResponse, ProductState, qrcodeResponse, qrcodeResponseWithId } from '../models/product';
 import { config } from '../../environments/environment';
 import { AuthResponsePassword } from '../models/response';
 
@@ -17,8 +17,8 @@ export class ProductService {
     return this.http.post<ProductResponse[]>(`${this.API}/get`, { id: Number(id) });
   }
 
-  createProduct(price: number, name: string, currency: string, userId: string): Observable<qrcodeResponse> {
-    return this.http.post<qrcodeResponse>(`${this.API}/create`, { price, name, currencySymbol: currency, userId: Number(userId) });
+  createProduct(price: number, name: string, currency: string, userId: string): Observable<qrcodeResponseWithId> {
+    return this.http.post<qrcodeResponseWithId>(`${this.API}/create`, { price, name, currencySymbol: currency, userId: Number(userId) });
   }
 
   printProduct(price: number, name: string, username: string, currencySymbol: string, column: number, rows: number, pages: number) {
