@@ -1,11 +1,12 @@
-[Uploading Capture vidéo du 2026-06-29 08-19-06.webm…]()
 <img width="1366" height="768" alt="Capture d’écran du 2026-06-26 10-14-36" src="https://github.com/user-attachments/assets/a111d924-a839-42ff-91fc-7059b29819ad" />
 <img width="1366" height="768" alt="Capture d’écran du 2026-06-26 10-14-42" src="https://github.com/user-attachments/assets/9a1a0300-8788-40b7-91e2-36a3c01f434a" />
 <img width="1366" height="768" alt="Capture d’écran du 2026-06-26 10-14-49" src="https://github.com/user-attachments/assets/ea57112a-98b1-421b-a787-07b5b8370f3a" />
 # 📦 QR Product Manager & Advanced Authentication System
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white" alt="Spring Boot" />
+  <img src="https://img.shie
+
+lds.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white" alt="Spring Boot" />
   <img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white" alt="Angular" />
   <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
   <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
@@ -30,10 +31,15 @@ L'application intègre une gestion **multilingue complète** et propose une inte
 Découvrez l'application en action avec l'authentification Firebase, l'envoi du code OTP, la génération du QR code et le changement de langue instantané :
 
 <p align="center">
-  <video src="https://github.com/votre-utilisateur/votre-repo/assets/liens-de-votre-video.mp4" width="100%" controls>
+  <video src="https://github.com/votre-utilisateur/votre-repo/assets/liens-de-votre-video.
+mp4" width="100%" controls>
     Votre navigateur ne supporte pas la lecture de cette vidéo.
   </video>
 </p>
+
+
+https://github.com/user-attachments/assets/e7c49b9a-b704-4140-a356-e4a007ddd629
+
 
 > 💡 **Astuce pour la vidéo :** Pour insérer votre propre vidéo, éditez ce fichier directement sur GitHub, glissez-déposez votre fichier vidéo (`.mp4`, `.mov`) dans la zone d'écriture, et GitHub remplacera automatiquement l'adresse `src="..."` par le bon lien !
 
